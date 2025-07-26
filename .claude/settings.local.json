@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.onlinepaymentplatform.com)",
+      "WebFetch(domain:docs.onlinepaymentplatform.com)",
+      "WebFetch(domain:docs.saloon.dev)",
+      "Bash(mkdir:*)",
+      "Bash(find:*)",
+      "Bash(php:*)",
+      "Bash(mv:*)",
+      "Bash(rm:*)",
+      "Bash(composer:*)",
+      "Bash(./vendor/bin/pest)",
+      "Bash(./vendor/bin/pest:*)",
+      "Bash(vendor/bin/pest:*)"
+    ],
+    "deny": []
+  }
+}

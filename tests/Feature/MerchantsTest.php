@@ -29,7 +29,7 @@ it('can create a merchant', function () {
     expect($response->json())->toHaveKey('uid');
     expect($response->json('type'))->toBe('consumer');
     expect($response->json('notify_url'))->toBe('https://example.com/webhook');
-})->group('recording', 'merchants');
+})->group('recording', 'replay', 'merchants');
 
 it('can create a merchant using DTO', function () {
     $randomEmail = 'test_dto_' . uniqid() . '_' . time() . '@example.com';
@@ -55,7 +55,7 @@ it('can create a merchant using DTO', function () {
     expect($merchantDto)->toBeInstanceOf(\JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Merchants\MerchantData::class);
     expect($merchantDto->type)->toBe('consumer');
     expect($merchantDto->notify_url)->toBe('https://example.com/webhook');
-})->group('recording', 'merchants');
+})->group('recording', 'replay', 'merchants');
 
 it('can retrieve a merchant', function () {
     // First create a merchant
@@ -78,7 +78,7 @@ it('can retrieve a merchant', function () {
     expect($response->successful())->toBeTrue();
     expect($response->json())->toHaveKey('uid');
     expect($response->json('uid'))->toBe($merchantUid);
-})->group('recording', 'merchants');
+})->group('recording', 'replay', 'merchants');
 
 it('can list merchants', function () {
     $response = $this->connector->merchants()->list(['limit' => 10]);
@@ -86,7 +86,7 @@ it('can list merchants', function () {
     expect($response->successful())->toBeTrue();
     expect($response->json())->toHaveKey('data');
     expect($response->json('data'))->toBeArray();
-})->group('recording', 'merchants');
+})->group('recording', 'replay', 'merchants');
 
 it('can add a contact to a merchant', function () {
     // First create a merchant
@@ -129,7 +129,7 @@ it('can add a contact to a merchant', function () {
 
     expect($response->successful())->toBeTrue();
     expect($response->json())->toHaveKey('uid');
-})->group('recording', 'merchants');
+})->group('recording', 'replay', 'merchants');
 
 it('can add an address to a merchant', function () {
     // First create a merchant
@@ -159,4 +159,4 @@ it('can add an address to a merchant', function () {
     expect($response->successful())->toBeTrue();
     expect($response->json())->toHaveKey('uid');
     expect($response->json('city'))->toBe('Amsterdam');
-})->group('recording', 'merchants');
+})->group('recording', 'replay', 'merchants');

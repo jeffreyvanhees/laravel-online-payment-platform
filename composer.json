@@ -38,6 +38,7 @@
     "scripts": {
         "test": "pest",
         "test-coverage": "pest --coverage",
+        "test-unit": "pest --group=unit",
         "record": "pest --group=recording",
         "replay": "pest --group=replay"
     },

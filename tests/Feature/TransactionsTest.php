@@ -45,7 +45,7 @@ it('can create a transaction', function () {
     expect($response->successful())->toBeTrue();
     expect($response->json())->toHaveKey('uid');
     expect($response->json('amount'))->toBe(1000);
-})->group('recording', 'transactions');
+})->group('recording', 'replay', 'transactions');
 
 it('can create a transaction using DTO', function () {
     // First create a merchant with unique email
@@ -87,7 +87,7 @@ it('can create a transaction using DTO', function () {
     expect($transactionDto)->toBeInstanceOf(\JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Transactions\TransactionData::class);
     expect($transactionDto->amount)->toBe(1000);
     expect($transactionDto->merchant_uid)->toBe($merchantUid);
-})->group('recording', 'transactions');
+})->group('recording', 'replay', 'transactions');
 
 it('can retrieve a transaction', function () {
     // First create a merchant and transaction
@@ -127,7 +127,7 @@ it('can retrieve a transaction', function () {
     expect($response->successful())->toBeTrue();
     expect($response->json())->toHaveKey('uid');
     expect($response->json('uid'))->toBe($transactionUid);
-})->group('recording', 'transactions');
+})->group('recording', 'replay', 'transactions');
 
 it('can list transactions', function () {
     $response = $this->connector->transactions()->list(['limit' => 10]);
@@ -135,7 +135,7 @@ it('can list transactions', function () {
     expect($response->successful())->toBeTrue();
     expect($response->json())->toHaveKey('data');
     expect($response->json('data'))->toBeArray();
-})->group('recording', 'transactions');
+})->group('recording', 'replay', 'transactions');
 
 it('can update a transaction', function () {
     // First create a merchant and transaction
@@ -176,4 +176,4 @@ it('can update a transaction', function () {
     $response = $this->connector->transactions()->update($transactionUid, $updateData);
 
     expect($response->successful())->toBeTrue();
-})->group('recording', 'transactions');
+})->group('recording', 'replay', 'transactions');

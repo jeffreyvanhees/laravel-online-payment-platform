@@ -29,7 +29,7 @@ it('can create a consumer merchant DTO', function () {
     expect($array)->toHaveKey('type');
     expect($array)->toHaveKey('country');
     expect($array)->toHaveKey('emailaddress');
-});
+})->group('unit');
 
 it('can create a business merchant DTO', function () {
     $dto = new CreateBusinessMerchantData(
@@ -43,7 +43,7 @@ it('can create a business merchant DTO', function () {
     expect($dto->type)->toBe('business');
     expect($dto->coc_nr)->toBe('12345678');
     expect($dto->legal_name)->toBe('Test B.V.');
-});
+})->group('unit');
 
 it('can create a transaction DTO with products', function () {
     $products = new DataCollection(ProductData::class, [
@@ -66,7 +66,7 @@ it('can create a transaction DTO with products', function () {
     expect($dto->total_price)->toBe(1000);
     expect($dto->products)->toHaveCount(1);
     expect($dto->products->first()->name)->toBe('Test Product');
-});
+})->group('unit');
 
 it('can create merchant response DTO from array', function () {
     $data = [
@@ -85,7 +85,7 @@ it('can create merchant response DTO from array', function () {
     expect($dto->type)->toBe('consumer');
     expect($dto->status)->toBe('active');
     expect($dto->emailaddress)->toBe('test@example.com');
-});
+})->group('unit');
 
 it('can create paginated merchants response DTO', function () {
     $data = [
@@ -115,4 +115,4 @@ it('can create paginated merchants response DTO', function () {
     expect($dto->data)->toHaveCount(1);
     expect($dto->data->first())->toBeInstanceOf(MerchantData::class);
     expect($dto->data->first()->uid)->toBe('mer_123');
-});
+})->group('unit');

@@ -1,0 +1,48 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    name: Validate Package
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Check code style (if available)
+        run: |
+          if [ -f "vendor/bin/php-cs-fixer" ]; then
+            vendor/bin/php-cs-fixer fix --dry-run --diff
+          else
+            echo "PHP CS Fixer not found, skipping"
+          fi
+
+      - name: Run static analysis (if available)
+        run: |
+          if [ -f "vendor/bin/phpstan" ]; then
+            vendor/bin/phpstan analyse
+          else
+            echo "PHPStan not found, skipping"
+          fi
+
+      - name: Test unit tests only (without API calls)
+        run: composer test -- --group=unit

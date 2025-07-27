@@ -43,7 +43,8 @@ jobs:
       - name: Get current version
         id: current_version
         run: |
-          CURRENT_VERSION=$(grep '"version"' composer.json | sed 's/.*"version": "\(.*\)".*/\1/')
+          # Get the latest tag, or default to 0.0.0 if no tags exist
+          CURRENT_VERSION=$(git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || echo "0.0.0")
           echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Determine bump type
@@ -65,17 +66,10 @@ jobs:
           NEW_VERSION=$(semver -i ${{ steps.bump_type.outputs.type }} ${{ steps.current_version.outputs.version }})
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Update composer.json version
-        run: |
-          sed -i 's/"version": ".*"/"version": "${{ steps.new_version.outputs.version }}"/' composer.json
-
-      - name: Commit version bump
+      - name: Configure Git
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add composer.json
-          git commit -m "Bump version to ${{ steps.new_version.outputs.version }} [skip release]"
-          git push
 
       - name: Create Git tag
         run: |

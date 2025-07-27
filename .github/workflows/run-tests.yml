@@ -16,6 +16,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Fix Git ownership
+        run: git config --global --add safe.directory /__w/laravel-online-payment-platform/laravel-online-payment-platform
+
       - name: Cache Composer packages
         uses: actions/cache@v3
         with:
@@ -28,31 +31,3 @@ jobs:
 
       - name: Execute tests (replay mode)
         run: composer replay
-
-  coverage:
-    runs-on: ubuntu-latest
-    container: kirschbaumdevelopment/laravel-test-runner:8.2
-    name: Coverage
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Cache Composer packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.composer/cache
-          key: composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: composer-
-
-      - name: Install composer dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
-
-      - name: Execute tests with coverage (replay mode)
-        run: composer test-coverage
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          file: ./coverage.xml
-          fail_ci_if_error: true

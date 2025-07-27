@@ -6,8 +6,9 @@
 
 A modern Laravel package for integrating with the [Online Payment Platform](https://onlinepaymentplatform.com) API. Built with [SaloonPHP](https://docs.saloon.dev) and [Spatie Laravel Data](https://spatie.be/docs/laravel-data) for an excellent developer experience.
 
-> [!NOTE]  
+> [!WARNING]  
 > This package is not affiliated with, endorsed by, or officially connected to Online Payment Platform B.V. It is an independent, community-driven implementation for integrating with their API.
+> Also, this package is not intended for production use yet. It is still in development and may contain breaking changes.
 
 ## ✨ Features
 

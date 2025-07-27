@@ -1,2 +1,19 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Coverage files
+coverage.xml export-ignore
+coverage-report/ export-ignore
+coverage.txt export-ignore
+
+# Test files  
+tests/ export-ignore
+phpunit.xml export-ignore
+
+# CI files
+.github/ export-ignore
+
+# Development files
+*.md export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore

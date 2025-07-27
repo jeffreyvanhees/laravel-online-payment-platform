@@ -12,7 +12,8 @@
       "Bash(composer:*)",
       "Bash(./vendor/bin/pest)",
       "Bash(./vendor/bin/pest:*)",
-      "Bash(vendor/bin/pest:*)"
+      "Bash(vendor/bin/pest:*)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }

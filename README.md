@@ -2,6 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffreyvanhees/laravel-online-payment-platform.svg?style=flat-square)](https://packagist.org/packages/jeffreyvanhees/laravel-online-payment-platform)
 [![Tests](https://img.shields.io/github/actions/workflow/status/jeffreyvanhees/laravel-online-payment-platform/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/run-tests.yml)
+[![Coverage](https://img.shields.io/badge/Coverage-53.9%25-yellow?style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/coverage.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/jeffreyvanhees/laravel-online-payment-platform.svg?style=flat-square)](https://packagist.org/packages/jeffreyvanhees/laravel-online-payment-platform)
 
 A modern Laravel package for integrating with the [Online Payment Platform](https://onlinepaymentplatform.com) API. Built with [SaloonPHP](https://docs.saloon.dev) and [Spatie Laravel Data](https://spatie.be/docs/laravel-data) for an excellent developer experience.
@@ -266,37 +267,6 @@ foreach ($paginator->paginate() as $response) {
 }
 ```
 
-## 🔗 URL Configuration
-
-The package allows you to configure default URLs that will be used across your application:
-
-### Setting Up URLs
-
-Configure URLs in your `.env` file:
-
-```env
-OPP_NOTIFY_URL=https://yourapp.com/webhooks/opp  
-OPP_RETURN_URL=https://yourapp.com/payment/return
-```
-
-### Using Configured URLs
-
-```php
-use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformFacade as Opp;
-
-// Create a transaction using configured URLs
-$transaction = Opp::transactions()->create([
-    'merchant_uid' => 'mer_123456789',
-    'total_price' => 1000,
-    'products' => [/* ... */],
-    'return_url' => 'https://yourapp.com/thanks', // Optional, will use default if not provided
-]);
-
-// Individual URL getters
-$notifyUrl = Opp::getNotifyUrl();   // Webhook/notification URL
-$returnUrl = Opp::getReturnUrl();   // User redirect URL
-```
-
 ### Benefits
 
 - **Centralized Configuration**: Set URLs once in `.env` file
@@ -381,8 +351,14 @@ Run the test suite:
 # Run all tests
 composer test
 
-# Run tests with coverage
+# Run tests with coverage report
 composer test-coverage
+
+# Generate HTML coverage report
+composer test-coverage-html
+
+# Generate Clover XML coverage report  
+composer test-coverage-clover
 
 # Record new HTTP interactions (requires real API credentials)
 composer record
@@ -390,6 +366,24 @@ composer record
 # Run tests using recorded interactions
 composer replay
 ```
+
+### Test Coverage
+
+The package includes comprehensive tests covering all API endpoints with **53.9% code coverage**:
+
+- ✅ **47 tests** covering all major endpoints
+- ✅ **128 assertions** ensuring functionality  
+- ✅ **Merchant operations** - CRUD, contacts, addresses, bank accounts, settlements
+- ✅ **Transaction lifecycle** - create, retrieve, update, delete
+- ✅ **Payment flows** - charges, mandates, withdrawals, disputes
+- ✅ **File operations** - upload, retrieval, management  
+- ✅ **Partner configuration** - settings management
+- ✅ **Error handling** - graceful sandbox environment handling
+
+Coverage reports are generated in multiple formats:
+- **Terminal**: Real-time coverage during test runs
+- **HTML**: Detailed browsable report in `coverage-report/`
+- **XML**: Machine-readable format for CI/CD integration
 
 ## 📖 Advanced Usage
 

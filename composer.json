@@ -7,7 +7,7 @@
     "authors": [
         {
             "name": "Jeffrey van Hees",
-            "email": "jeffrey@example.com"
+            "email": "jeffvanhees@gmail.com"
         }
     ],
     "require": {
@@ -38,6 +38,8 @@
     "scripts": {
         "test": "pest",
         "test-coverage": "pest --coverage",
+        "test-coverage-html": "pest --coverage --coverage-html=coverage-report",
+        "test-coverage-clover": "pest --coverage --coverage-clover=coverage.xml",
         "test-unit": "pest --group=unit",
         "record": "pest --group=recording",
         "replay": "pest --group=replay"

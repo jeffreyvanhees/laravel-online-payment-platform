@@ -47,15 +47,10 @@ jobs:
         echo "percentage=$COVERAGE" >> $GITHUB_OUTPUT
         echo "Coverage: $COVERAGE%"
 
-    - name: Create coverage badge
-      uses: schneegans/dynamic-badges-action@v1.7.0
-      with:
-        auth: ${{ secrets.GITHUB_TOKEN }}
-        gistID: ${{ secrets.COVERAGE_GIST_ID }}
-        filename: coverage.json
-        label: Coverage
-        message: ${{ steps.coverage.outputs.percentage }}%
-        color: ${{ steps.coverage.outputs.percentage > 80 && 'brightgreen' || steps.coverage.outputs.percentage > 60 && 'yellow' || 'red' }}
+    - name: Display coverage results
+      run: |
+        echo "Coverage: ${{ steps.coverage.outputs.percentage }}%"
+        echo "You can manually update the README badge if needed"
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v4

@@ -13,12 +13,14 @@ use JeffreyVanHees\OnlinePaymentPlatform\Resources\PartnersResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\TransactionsResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\WithdrawalsResource;
 use Saloon\Contracts\Authenticator;
+use Saloon\Contracts\Body\HasBody;
 use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
 use Saloon\PaginationPlugin\Contracts\HasPagination;
 use Saloon\PaginationPlugin\PagedPaginator;
+use Saloon\Traits\Body\HasJsonBody;
 
 /**
  * Main connector class for the Online Payment Platform API
@@ -26,8 +28,9 @@ use Saloon\PaginationPlugin\PagedPaginator;
  * This class serves as the entry point for all API interactions with the Online Payment Platform.
  * It handles authentication, base URL configuration, and provides access to all resource endpoints.
  */
-class OnlinePaymentPlatformConnector extends Connector implements HasPagination
+class OnlinePaymentPlatformConnector extends Connector implements HasPagination, HasBody
 {
+    use HasJsonBody;
     /**
      * Initialize the OPP API connector
      *
@@ -73,6 +76,28 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
         ];
+    }
+
+    /**
+     * Configure default body for all requests
+     * 
+     * @return array
+     */
+    protected function defaultBody(): array
+    {
+        $body = [];
+
+        // Add notify_url if configured
+        if (config('opp.urls.notify')) {
+            $body['notify_url'] = $this->getNotifyUrl();
+        }
+
+        // Add return_url if configured
+        if (config('opp.urls.return')) {
+            $body['return_url'] = $this->getReturnUrl();
+        }
+
+        return $body;
     }
 
     /**
@@ -191,5 +216,25 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination
                 return $request;
             }
         };
+    }
+
+    /**
+     * Get the configured notify URL
+     * 
+     * @return string|null The configured notify URL
+     */
+    public function getNotifyUrl(): ?string
+    {
+        return config('opp.urls.notify');
+    }
+
+    /**
+     * Get the configured return URL
+     * 
+     * @return string|null The configured return URL
+     */
+    public function getReturnUrl(): ?string
+    {
+        return config('opp.urls.return');
     }
 }

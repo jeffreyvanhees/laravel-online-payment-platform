@@ -51,6 +51,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | URL Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configure default URLs for webhooks and notifications. These will be used
+    | as defaults when creating merchants, transactions, etc.
+    |
+    */
+
+    'urls' => [
+        'notify' => env('OPP_NOTIFY_URL'),
+        'return' => env('OPP_RETURN_URL'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Webhook Configuration
     |--------------------------------------------------------------------------
     |
@@ -59,7 +74,7 @@ return [
     */
 
     'webhooks' => [
-        'secret' => env('OPP_WEBHOOK_SECRET'),
+        'secret' => env('OPP_NOTIFY_SECRET'),
         'verify_signature' => env('OPP_WEBHOOK_VERIFY_SIGNATURE', true),
     ],
 

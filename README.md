@@ -42,12 +42,20 @@ Publish the configuration file:
 php artisan vendor:publish --tag=opp-config
 ```
 
-Configure your API credentials in your `.env` file:
+Configure your API credentials and URLs in your `.env` file:
 
 ```env
+# API Configuration
 OPP_API_KEY=your_production_api_key_here
 OPP_SANDBOX_API_KEY=your_sandbox_api_key_here
 OPP_SANDBOX=true
+
+# URL Configuration (optional - set default URLs for webhooks/notifications)
+OPP_NOTIFY_URL=https://yourapp.com/webhooks/opp
+OPP_RETURN_URL=https://yourapp.com/payment/return
+
+# Webhook Configuration (optional)
+OPP_NOTIFY_SECRET=your_webhook_secret
 ```
 
 ## 🎯 Usage
@@ -64,14 +72,13 @@ The facade provides the cleanest and most Laravel-like API:
 use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformFacade as Opp;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateConsumerMerchantData;
 
-// Create a consumer merchant
+// Create a consumer merchant using configured URLs
 $response = Opp::merchants()->create([
     'type' => 'consumer',
     'country' => 'NLD',
     'emailaddress' => 'john.doe@example.com',
     'first_name' => 'John',
     'last_name' => 'Doe',
-    'notify_url' => 'https://yoursite.com/webhooks/opp',
 ]);
 
 if ($response->successful()) {
@@ -258,6 +265,44 @@ foreach ($paginator->paginate() as $response) {
     }
 }
 ```
+
+## 🔗 URL Configuration
+
+The package allows you to configure default URLs that will be used across your application:
+
+### Setting Up URLs
+
+Configure URLs in your `.env` file:
+
+```env
+OPP_NOTIFY_URL=https://yourapp.com/webhooks/opp  
+OPP_RETURN_URL=https://yourapp.com/payment/return
+```
+
+### Using Configured URLs
+
+```php
+use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformFacade as Opp;
+
+// Create a transaction using configured URLs
+$transaction = Opp::transactions()->create([
+    'merchant_uid' => 'mer_123456789',
+    'total_price' => 1000,
+    'products' => [/* ... */],
+    'return_url' => 'https://yourapp.com/thanks', // Optional, will use default if not provided
+]);
+
+// Individual URL getters
+$notifyUrl = Opp::getNotifyUrl();   // Webhook/notification URL
+$returnUrl = Opp::getReturnUrl();   // User redirect URL
+```
+
+### Benefits
+
+- **Centralized Configuration**: Set URLs once in `.env` file
+- **Environment-Specific**: Different URLs for development, staging, production
+- **Default Values**: Automatically use configured URLs across your app
+- **Override Capability**: Still override URLs per request when needed
 
 ## ⚙️ Configuration
 

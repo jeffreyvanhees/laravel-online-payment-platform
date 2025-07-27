@@ -401,6 +401,24 @@ $connector->middleware()->onResponse(function ($response) {
 ```
 
 
+## 🚀 Releases
+
+This package uses automated versioning and releases:
+
+- **Automatic**: Patch version bump on every push to `main` branch
+- **Manual**: Use commit messages to control version bumps:
+  - `[major]` in commit message → Major version bump (e.g., 1.0.0 → 2.0.0)
+  - `[minor]` in commit message → Minor version bump (e.g., 1.0.0 → 1.1.0)
+  - Default → Patch version bump (e.g., 1.0.0 → 1.0.1)
+- **Skip Release**: Add `[skip release]` to commit message to skip version bump
+
+### Manual Release Trigger
+
+You can also manually trigger a release via GitHub Actions:
+1. Go to Actions → Release workflow
+2. Click "Run workflow"
+3. Select the version bump type (patch/minor/major)
+
 ## 🤝 Contributing
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute.

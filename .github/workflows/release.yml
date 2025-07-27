@@ -1,0 +1,97 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Version bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip release]')"
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install semver
+        run: npm install -g semver
+
+      - name: Get current version
+        id: current_version
+        run: |
+          CURRENT_VERSION=$(grep '"version"' composer.json | sed 's/.*"version": "\(.*\)".*/\1/')
+          echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Determine bump type
+        id: bump_type
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "type=${{ github.event.inputs.bump }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ contains(github.event.head_commit.message, '[major]') }}" == "true" ]]; then
+            echo "type=major" >> $GITHUB_OUTPUT
+          elif [[ "${{ contains(github.event.head_commit.message, '[minor]') }}" == "true" ]]; then
+            echo "type=minor" >> $GITHUB_OUTPUT
+          else
+            echo "type=patch" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Calculate new version
+        id: new_version
+        run: |
+          NEW_VERSION=$(semver -i ${{ steps.bump_type.outputs.type }} ${{ steps.current_version.outputs.version }})
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Update composer.json version
+        run: |
+          sed -i 's/"version": ".*"/"version": "${{ steps.new_version.outputs.version }}"/' composer.json
+
+      - name: Commit version bump
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add composer.json
+          git commit -m "Bump version to ${{ steps.new_version.outputs.version }} [skip release]"
+          git push
+
+      - name: Create Git tag
+        run: |
+          git tag -a "v${{ steps.new_version.outputs.version }}" -m "Release v${{ steps.new_version.outputs.version }}"
+          git push origin "v${{ steps.new_version.outputs.version }}"
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "v${{ steps.new_version.outputs.version }}"
+          release_name: "Release v${{ steps.new_version.outputs.version }}"
+          body: |
+            ## Changes in v${{ steps.new_version.outputs.version }}
+            
+            Auto-generated release from commit: ${{ github.event.head_commit.message }}
+            
+            ### Commit Details
+            - **Commit**: ${{ github.sha }}
+            - **Author**: ${{ github.event.head_commit.author.name }}
+            - **Date**: ${{ github.event.head_commit.timestamp }}
+          draft: false
+          prerelease: ${{ contains(steps.new_version.outputs.version, '-') }}

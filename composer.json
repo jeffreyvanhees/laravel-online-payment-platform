@@ -1,6 +1,7 @@
 {
     "name": "jeffreyvanhees/laravel-online-payment-platform",
     "description": "Laravel connector for Online Payment Platform API using SaloonPHP",
+    "version": "0.0.1",
     "type": "library",
     "license": "MIT",
     "keywords": ["payment", "api", "sdk", "online-payment-platform", "saloon", "laravel"],

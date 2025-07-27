@@ -18,9 +18,7 @@ class CreateChargeRequest extends Request implements HasBody
 
     protected Method $method = Method::POST;
 
-    public function __construct(protected CreateChargeData|array $data)
-    {
-    }
+    public function __construct(protected CreateChargeData|array $data) {}
 
     public function resolveEndpoint(): string
     {

@@ -21,8 +21,7 @@ class CreateMerchantUBORequest extends Request implements HasBody
     public function __construct(
         protected string $merchantUid,
         protected CreateMerchantUBOData|array $data
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

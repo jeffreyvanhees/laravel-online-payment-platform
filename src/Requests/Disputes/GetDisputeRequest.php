@@ -14,8 +14,7 @@ class GetDisputeRequest extends Request
     public function __construct(
         protected string $disputeUid,
         protected array $params = []
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

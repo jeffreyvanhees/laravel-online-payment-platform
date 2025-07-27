@@ -18,8 +18,7 @@ class AddMerchantAddressRequest extends Request implements HasBody
     public function __construct(
         protected string $merchantUid,
         protected array $data
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

@@ -14,6 +14,5 @@ class BankAccountData extends BaseData
         public ?string $iban = null,
         public ?string $bic = null,
         public ?string $holder_name = null,
-    ) {
-    }
+    ) {}
 }

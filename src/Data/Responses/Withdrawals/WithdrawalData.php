@@ -21,6 +21,5 @@ class WithdrawalData extends BaseData
         public ?string $created_at = null,
         public ?string $updated_at = null,
         public ?string $processed_at = null,
-    ) {
-    }
+    ) {}
 }

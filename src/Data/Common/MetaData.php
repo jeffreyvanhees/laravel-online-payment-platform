@@ -10,6 +10,5 @@ class MetaData extends BaseData
 {
     public function __construct(
         public PaginationData $pagination,
-    ) {
-    }
+    ) {}
 }

@@ -15,6 +15,5 @@ class CreateChargeData extends BaseData
         public string $to_owner_uid,
         public ?string $description = null,
         public ?array $metadata = null,
-    ) {
-    }
+    ) {}
 }

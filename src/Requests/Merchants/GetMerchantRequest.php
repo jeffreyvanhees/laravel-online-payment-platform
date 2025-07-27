@@ -13,9 +13,7 @@ class GetMerchantRequest extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(protected string $merchantUid)
-    {
-    }
+    public function __construct(protected string $merchantUid) {}
 
     public function resolveEndpoint(): string
     {

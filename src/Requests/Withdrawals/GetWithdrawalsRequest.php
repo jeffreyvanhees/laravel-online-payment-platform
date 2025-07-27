@@ -14,15 +14,14 @@ class GetWithdrawalsRequest extends Request
     public function __construct(
         protected array $params = [],
         protected ?string $merchantUid = null
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
         if ($this->merchantUid) {
             return "/merchants/{$this->merchantUid}/withdrawals";
         }
-        
+
         return '/withdrawals';
     }
 

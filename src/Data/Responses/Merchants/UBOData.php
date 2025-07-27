@@ -20,6 +20,5 @@ class UBOData extends BaseData
         public ?float $percentage_of_shares = null,
         public ?string $created_at = null,
         public ?string $updated_at = null,
-    ) {
-    }
+    ) {}
 }

@@ -17,8 +17,7 @@ class GetMerchantUBOsRequest extends Request
     public function __construct(
         protected string $merchantUid,
         protected array $params = []
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
@@ -35,9 +34,9 @@ class GetMerchantUBOsRequest extends Request
         return PaginatedListResponse::from([
             ...$response->json(),
             'data' => array_map(
-                fn($item) => UBOData::from($item),
+                fn ($item) => UBOData::from($item),
                 $response->json('data', [])
-            )
+            ),
         ]);
     }
 }

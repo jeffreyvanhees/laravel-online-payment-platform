@@ -17,7 +17,7 @@ abstract class BaseData extends Data
     public function toArray(): array
     {
         $data = parent::toArray();
-        
+
         // Filter out null values recursively
         return $this->filterNullValues($data);
     }
@@ -28,22 +28,22 @@ abstract class BaseData extends Data
     private function filterNullValues(array $data): array
     {
         $filtered = [];
-        
+
         foreach ($data as $key => $value) {
             if ($value === null) {
                 continue;
             }
-            
+
             if (is_array($value)) {
                 $filteredValue = $this->filterNullValues($value);
-                if (!empty($filteredValue)) {
+                if (! empty($filteredValue)) {
                     $filtered[$key] = $filteredValue;
                 }
             } else {
                 $filtered[$key] = $value;
             }
         }
-        
+
         return $filtered;
     }
 }

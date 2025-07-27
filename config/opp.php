@@ -12,7 +12,7 @@ return [
     */
 
     'api_key' => env('OPP_API_KEY'),
-    
+
     'sandbox' => env('OPP_SANDBOX', true),
 
     /*

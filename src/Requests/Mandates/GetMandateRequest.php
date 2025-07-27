@@ -11,9 +11,7 @@ class GetMandateRequest extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(protected string $mandateUid)
-    {
-    }
+    public function __construct(protected string $mandateUid) {}
 
     public function resolveEndpoint(): string
     {

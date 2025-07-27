@@ -16,6 +16,5 @@ class BuyerData extends BaseData
         public ?string $company_name = null,
         public ?string $coc_nr = null,
         public ?string $vat_nr = null,
-    ) {
-    }
+    ) {}
 }

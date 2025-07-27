@@ -21,8 +21,7 @@ class CreateMerchantProfileRequest extends Request implements HasBody
     public function __construct(
         protected string $merchantUid,
         protected CreateMerchantProfileData|array $data
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

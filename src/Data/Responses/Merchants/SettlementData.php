@@ -18,6 +18,5 @@ class SettlementData extends BaseData
         public ?string $created_at = null,
         public ?string $updated_at = null,
         public ?array $transactions = null,
-    ) {
-    }
+    ) {}
 }

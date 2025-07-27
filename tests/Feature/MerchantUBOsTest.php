@@ -20,7 +20,7 @@ it('can create a UBO for a business merchant', function () {
     ];
 
     $merchantResponse = $this->connector->merchants()->create($merchantData);
-    
+
     // Only test UBO creation if merchant creation was successful
     if ($merchantResponse->successful()) {
         $merchantUid = $merchantResponse->json('uid');
@@ -62,7 +62,7 @@ it('can retrieve a UBO', function () {
     ];
 
     $merchantResponse = $this->connector->merchants()->create($merchantData);
-    
+
     if ($merchantResponse->successful()) {
         $merchantUid = $merchantResponse->json('uid');
 
@@ -76,10 +76,10 @@ it('can retrieve a UBO', function () {
         ];
 
         $createResponse = $this->connector->merchants()->ubos($merchantUid)->create($uboData);
-        
+
         if ($createResponse->successful()) {
             $uboUid = $createResponse->json('uid');
-            
+
             // Now retrieve the UBO
             $response = $this->connector->merchants()->ubos($merchantUid)->get($uboUid);
 
@@ -107,7 +107,7 @@ it('can list UBOs for a merchant', function () {
     ];
 
     $merchantResponse = $this->connector->merchants()->create($merchantData);
-    
+
     if ($merchantResponse->successful()) {
         $merchantUid = $merchantResponse->json('uid');
 

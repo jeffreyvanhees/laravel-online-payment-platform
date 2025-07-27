@@ -10,7 +10,7 @@ use Saloon\Http\Response;
 
 /**
  * Subresource for managing mandate transactions
- * 
+ *
  * Provides methods for creating transactions using existing mandates.
  */
 class TransactionsResource extends BaseResource
@@ -24,10 +24,10 @@ class TransactionsResource extends BaseResource
 
     /**
      * Create a transaction using the mandate
-     * 
-     * @param array $data Transaction data including total_price, products, etc.
+     *
+     * @param  array  $data  Transaction data including total_price, products, etc.
      * @return Response API response containing the created transaction data
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When required fields are missing or invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When mandate is not found or other API errors
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid

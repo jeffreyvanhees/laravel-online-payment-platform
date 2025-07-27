@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffreyvanhees/laravel-online-payment-platform.svg?style=flat-square)](https://packagist.org/packages/jeffreyvanhees/laravel-online-payment-platform)
 [![Tests](https://img.shields.io/github/actions/workflow/status/jeffreyvanhees/laravel-online-payment-platform/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/run-tests.yml)
-[![Coverage](https://img.shields.io/badge/Coverage-49.4%25-red?style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/coverage.yml)
+[![Coverage](https://img.shields.io/badge/Coverage-51.1%25-red?style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/coverage.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/jeffreyvanhees/laravel-online-payment-platform.svg?style=flat-square)](https://packagist.org/packages/jeffreyvanhees/laravel-online-payment-platform)
 
 A modern Laravel package for integrating with the [Online Payment Platform](https://onlinepaymentplatform.com) API. Built with [SaloonPHP](https://docs.saloon.dev) and [Spatie Laravel Data](https://spatie.be/docs/laravel-data) for an excellent developer experience.
@@ -388,7 +388,7 @@ composer replay
 
 ### Test Coverage
 
-The package includes comprehensive tests covering all API endpoints with **49.4% code coverage**:
+The package includes comprehensive tests covering all API endpoints with **51.1% code coverage**:
 
 - ✅ **53 tests** covering all major endpoints
 - ✅ **135 assertions** ensuring functionality  

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace JeffreyVanHees\OnlinePaymentPlatform;
 
 use Illuminate\Support\Facades\Facade;
-use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformConnector;
 
 /**
  * @method static \JeffreyVanHees\OnlinePaymentPlatform\Resources\MerchantsResource merchants()

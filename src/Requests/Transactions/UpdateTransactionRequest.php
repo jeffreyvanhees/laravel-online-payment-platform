@@ -18,8 +18,7 @@ class UpdateTransactionRequest extends Request implements HasBody
     public function __construct(
         protected string $transactionUid,
         protected array $data
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

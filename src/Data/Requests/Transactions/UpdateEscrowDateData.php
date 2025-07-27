@@ -10,6 +10,5 @@ class UpdateEscrowDateData extends BaseData
 {
     public function __construct(
         public string $escrow_date,
-    ) {
-    }
+    ) {}
 }

@@ -10,7 +10,7 @@ use Saloon\Http\Response;
 
 /**
  * Subresource for managing merchant bank accounts
- * 
+ *
  * Provides methods for adding and managing bank accounts for merchants.
  */
 class BankAccountsResource extends BaseResource
@@ -24,10 +24,10 @@ class BankAccountsResource extends BaseResource
 
     /**
      * Add a bank account to the merchant
-     * 
-     * @param array $data Bank account data including iban, account_holder_name, etc.
+     *
+     * @param  array  $data  Bank account data including iban, account_holder_name, etc.
      * @return Response API response containing the created bank account data
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When required bank account fields are missing
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When merchant is not found or other API errors
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid

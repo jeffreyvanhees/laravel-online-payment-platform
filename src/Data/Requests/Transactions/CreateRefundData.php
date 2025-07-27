@@ -12,6 +12,5 @@ class CreateRefundData extends BaseData
         public int $amount, // in cents
         public ?string $payout_description = null,
         public ?string $message = null,
-    ) {
-    }
+    ) {}
 }

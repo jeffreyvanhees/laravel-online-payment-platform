@@ -25,7 +25,7 @@ it('can create a withdrawal', function () {
 
     $withdrawalData = [
         'amount' => 5000, // €50.00 in cents
-        'reference' => 'withdrawal-test-' . time(),
+        'reference' => 'withdrawal-test-'.time(),
         'description' => 'Test withdrawal',
         'notify_url' => 'https://example.com/notify',
     ];
@@ -61,17 +61,17 @@ it('can retrieve a withdrawal', function () {
 
     $withdrawalData = [
         'amount' => 3000,
-        'reference' => 'withdrawal-retrieve-' . time(),
+        'reference' => 'withdrawal-retrieve-'.time(),
         'description' => 'Retrieve test withdrawal',
         'notify_url' => 'https://example.com/notify',
     ];
 
     $createResponse = $this->connector->withdrawals()->create($merchantUid, $withdrawalData);
-    
+
     // Only test retrieval if creation was successful
     if ($createResponse->successful()) {
         $withdrawalUid = $createResponse->json('uid');
-        
+
         // Now retrieve the withdrawal
         $response = $this->connector->withdrawals()->get($withdrawalUid);
 
@@ -116,13 +116,13 @@ it('can delete a withdrawal', function () {
 
     $withdrawalData = [
         'amount' => 1000,
-        'reference' => 'withdrawal-delete-' . time(),
+        'reference' => 'withdrawal-delete-'.time(),
         'description' => 'Delete test withdrawal',
         'notify_url' => 'https://example.com/notify',
     ];
 
     $createResponse = $this->connector->withdrawals()->create($merchantUid, $withdrawalData);
-    
+
     // Only test deletion if creation was successful
     if ($createResponse->successful()) {
         $withdrawalUid = $createResponse->json('uid');

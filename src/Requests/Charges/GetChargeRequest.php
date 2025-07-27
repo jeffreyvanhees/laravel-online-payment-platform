@@ -11,9 +11,7 @@ class GetChargeRequest extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(protected string $chargeUid)
-    {
-    }
+    public function __construct(protected string $chargeUid) {}
 
     public function resolveEndpoint(): string
     {

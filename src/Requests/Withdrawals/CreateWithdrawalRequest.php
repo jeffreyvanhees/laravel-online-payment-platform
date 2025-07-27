@@ -19,15 +19,14 @@ class CreateWithdrawalRequest extends Request implements HasBody
         protected string $merchantUid,
         protected array $data,
         protected ?string $profileUid = null
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {
         if ($this->profileUid) {
             return "/merchants/{$this->merchantUid}/profiles/{$this->profileUid}/withdrawals";
         }
-        
+
         return "/merchants/{$this->merchantUid}/withdrawals";
     }
 

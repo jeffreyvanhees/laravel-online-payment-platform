@@ -21,8 +21,7 @@ class UploadFileRequest extends Request implements HasBody
         protected string $token,
         protected string $filePath,
         protected string $fileName
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

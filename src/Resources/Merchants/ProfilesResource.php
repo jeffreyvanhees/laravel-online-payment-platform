@@ -12,7 +12,7 @@ use Saloon\Http\Response;
 
 /**
  * Resource class for managing merchant profiles
- * 
+ *
  * Profiles define different configurations and settings for merchants,
  * allowing for customized behavior across different business scenarios.
  */
@@ -27,10 +27,10 @@ class ProfilesResource extends BaseResource
 
     /**
      * Create a new profile for the merchant
-     * 
-     * @param array $data Profile data including name, configuration, etc.
+     *
+     * @param  array  $data  Profile data including name, configuration, etc.
      * @return Response API response containing the created profile data
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When required fields are missing
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException For other API errors
@@ -42,10 +42,10 @@ class ProfilesResource extends BaseResource
 
     /**
      * Retrieve a specific profile by UID
-     * 
-     * @param string $profileUid The unique identifier of the profile
+     *
+     * @param  string  $profileUid  The unique identifier of the profile
      * @return Response API response containing the profile data
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When profile is not found or other API errors
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      */
@@ -56,10 +56,10 @@ class ProfilesResource extends BaseResource
 
     /**
      * List all profiles for the merchant
-     * 
-     * @param array $params Optional query parameters for filtering
+     *
+     * @param  array  $params  Optional query parameters for filtering
      * @return Response API response containing a list of profiles
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException For other API errors
      */

@@ -16,6 +16,5 @@ class AddressData extends BaseData
         public string $country,
         public ?string $address_line_2 = null,
         public ?string $state = null,
-    ) {
-    }
+    ) {}
 }

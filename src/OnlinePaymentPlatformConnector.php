@@ -24,40 +24,40 @@ use Saloon\Traits\Body\HasJsonBody;
 
 /**
  * Main connector class for the Online Payment Platform API
- * 
+ *
  * This class serves as the entry point for all API interactions with the Online Payment Platform.
  * It handles authentication, base URL configuration, and provides access to all resource endpoints.
  */
-class OnlinePaymentPlatformConnector extends Connector implements HasPagination, HasBody
+class OnlinePaymentPlatformConnector extends Connector implements HasBody, HasPagination
 {
     use HasJsonBody;
+
     /**
      * Initialize the OPP API connector
      *
-     * @param string $apiKey The API key for authentication
-     * @param bool $sandbox Whether to use sandbox environment (default: true)
+     * @param  string  $apiKey  The API key for authentication
+     * @param  bool  $sandbox  Whether to use sandbox environment (default: true)
      */
     public function __construct(
         protected string $apiKey,
         protected bool $sandbox = true
-    ) {
-    }
+    ) {}
 
     /**
      * Resolve the base URL for API requests
-     * 
+     *
      * @return string The base URL for API requests
      */
     public function resolveBaseUrl(): string
     {
-        return $this->sandbox 
+        return $this->sandbox
             ? 'https://api-sandbox.onlinebetaalplatform.nl/v1'
             : 'https://api.onlinebetaalplatform.nl/v1';
     }
 
     /**
      * Configure default authentication for requests
-     * 
+     *
      * @return Authenticator|null The authenticator instance
      */
     protected function defaultAuth(): ?Authenticator
@@ -67,7 +67,7 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Configure default headers for requests
-     * 
+     *
      * @return array<string, string> Default headers
      */
     protected function defaultHeaders(): array
@@ -80,8 +80,6 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Configure default body for all requests
-     * 
-     * @return array
      */
     protected function defaultBody(): array
     {
@@ -102,7 +100,7 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Get the merchants resource for merchant-related operations
-     * 
+     *
      * @return MerchantsResource Merchants resource instance
      */
     public function merchants(): MerchantsResource
@@ -112,7 +110,7 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Get the transactions resource for transaction-related operations
-     * 
+     *
      * @return TransactionsResource Transactions resource instance
      */
     public function transactions(): TransactionsResource
@@ -122,7 +120,7 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Get the charges resource for charge-related operations
-     * 
+     *
      * @return ChargesResource Charges resource instance
      */
     public function charges(): ChargesResource
@@ -132,7 +130,7 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Get the mandates resource for mandate-related operations
-     * 
+     *
      * @return MandatesResource Mandates resource instance
      */
     public function mandates(): MandatesResource
@@ -142,7 +140,7 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Get the withdrawals resource for withdrawal-related operations
-     * 
+     *
      * @return WithdrawalsResource Withdrawals resource instance
      */
     public function withdrawals(): WithdrawalsResource
@@ -152,7 +150,7 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Get the disputes resource for dispute-related operations
-     * 
+     *
      * @return DisputesResource Disputes resource instance
      */
     public function disputes(): DisputesResource
@@ -162,7 +160,7 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Get the files resource for file-related operations
-     * 
+     *
      * @return FilesResource Files resource instance
      */
     public function files(): FilesResource
@@ -172,7 +170,7 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Get the partners resource for partner-related operations
-     * 
+     *
      * @return PartnersResource Partners resource instance
      */
     public function partners(): PartnersResource
@@ -182,8 +180,8 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Create a paginated iterator for API responses
-     * 
-     * @param Request $request The request to paginate
+     *
+     * @param  Request  $request  The request to paginate
      * @return PagedPaginator Paginated iterator
      */
     public function paginate(Request $request): PagedPaginator
@@ -196,9 +194,10 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
             {
                 // Use Online Payment Platform's pagination format
                 $hasMore = $response->json('has_more', false);
-                return !$hasMore;
+
+                return ! $hasMore;
             }
-            
+
             protected function getPageItems(Response $response, Request $request): array
             {
                 return $response->json('data', []);
@@ -208,7 +207,7 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
             {
                 // Use OPP's pagination parameters
                 $request->query()->add('page', $this->currentPage);
-                
+
                 if (isset($this->perPageLimit)) {
                     $request->query()->add('perpage', $this->perPageLimit);
                 }
@@ -220,7 +219,7 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Get the configured notify URL
-     * 
+     *
      * @return string|null The configured notify URL
      */
     public function getNotifyUrl(): ?string
@@ -230,7 +229,7 @@ class OnlinePaymentPlatformConnector extends Connector implements HasPagination,
 
     /**
      * Get the configured return URL
-     * 
+     *
      * @return string|null The configured return URL
      */
     public function getReturnUrl(): ?string

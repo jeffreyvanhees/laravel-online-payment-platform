@@ -17,6 +17,5 @@ class CreateMerchantUBOData extends BaseData
         public ?bool $is_decision_maker = null,
         public ?bool $is_pep = null,
         public ?float $percentage_of_shares = null,
-    ) {
-    }
+    ) {}
 }

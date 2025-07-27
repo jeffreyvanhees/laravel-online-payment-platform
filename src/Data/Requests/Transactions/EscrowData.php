@@ -11,6 +11,5 @@ class EscrowData extends BaseData
     public function __construct(
         public bool $enabled,
         public ?string $release_date = null,
-    ) {
-    }
+    ) {}
 }

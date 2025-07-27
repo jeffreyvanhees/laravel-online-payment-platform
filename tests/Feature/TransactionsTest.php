@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Transactions\CreateTransactionData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Common\ProductData;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Transactions\CreateTransactionData;
 use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformConnector;
-use Spatie\LaravelData\DataCollection;
 
 beforeEach(function () {
     $this->connector = new OnlinePaymentPlatformConnector($this->getSandboxApiKey(), true);
@@ -81,7 +80,7 @@ it('can create a transaction using DTO', function () {
     expect($response->successful())->toBeTrue();
     expect($response->json())->toHaveKey('uid');
     expect($response->json('amount'))->toBe(1000);
-    
+
     // Test DTO creation from response
     $transactionDto = $response->dto();
     expect($transactionDto)->toBeInstanceOf(\JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Transactions\TransactionData::class);
@@ -120,7 +119,7 @@ it('can retrieve a transaction', function () {
 
     $createResponse = $this->connector->transactions()->create($transactionData);
     $transactionUid = $createResponse->json('uid');
-    
+
     // Now retrieve the transaction
     $response = $this->connector->transactions()->get($transactionUid);
 

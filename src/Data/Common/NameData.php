@@ -13,6 +13,5 @@ class NameData extends BaseData
         public string $last,
         public ?string $initials = null,
         public ?string $prefix = null,
-    ) {
-    }
+    ) {}
 }

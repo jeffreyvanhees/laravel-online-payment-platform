@@ -74,11 +74,11 @@ it('can retrieve a mandate', function () {
     ];
 
     $createResponse = $this->connector->mandates()->create($mandateData);
-    
+
     // Only test retrieval if creation was successful
     if ($createResponse->successful()) {
         $mandateUid = $createResponse->json('uid');
-        
+
         // Now retrieve the mandate
         $response = $this->connector->mandates()->get($mandateUid);
 
@@ -130,7 +130,7 @@ it('can delete a mandate', function () {
     ];
 
     $createResponse = $this->connector->mandates()->create($mandateData);
-    
+
     // Only test deletion if creation was successful
     if ($createResponse->successful()) {
         $mandateUid = $createResponse->json('uid');
@@ -170,7 +170,7 @@ it('can create a mandate transaction', function () {
     ];
 
     $mandateResponse = $this->connector->mandates()->create($mandateData);
-    
+
     // Only test mandate transaction if mandate creation was successful
     if ($mandateResponse->successful()) {
         $mandateUid = $mandateResponse->json('uid');

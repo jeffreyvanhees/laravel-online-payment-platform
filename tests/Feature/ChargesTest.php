@@ -70,11 +70,11 @@ it('can retrieve a charge', function () {
     ];
 
     $createResponse = $this->connector->charges()->create($chargeData);
-    
+
     // Only test retrieval if creation was successful
     if ($createResponse->successful()) {
         $chargeUid = $createResponse->json('uid');
-        
+
         // Now retrieve the charge
         $response = $this->connector->charges()->get($chargeUid);
 

@@ -14,8 +14,7 @@ class GetMerchantSettlementsRequest extends Request
     public function __construct(
         protected string $merchantUid,
         protected array $params = []
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

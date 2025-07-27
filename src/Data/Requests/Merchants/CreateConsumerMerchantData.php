@@ -12,7 +12,7 @@ use Spatie\LaravelData\DataCollection;
 class CreateConsumerMerchantData extends BaseData
 {
     public function __construct(
-        public string $type = 'consumer',
+        public string $type,
         public string $country,
         public string $emailaddress,
         public ?string $first_name = null,
@@ -25,6 +25,5 @@ class CreateConsumerMerchantData extends BaseData
         #[DataCollectionOf(AddressData::class)]
         public ?DataCollection $addresses = null,
         public ?array $metadata = null,
-    ) {
-    }
+    ) {}
 }

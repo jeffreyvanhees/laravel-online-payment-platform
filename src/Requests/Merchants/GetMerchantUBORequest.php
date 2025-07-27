@@ -16,8 +16,7 @@ class GetMerchantUBORequest extends Request
     public function __construct(
         protected string $merchantUid,
         protected string $uboUid
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

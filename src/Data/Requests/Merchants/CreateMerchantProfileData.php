@@ -15,6 +15,5 @@ class CreateMerchantProfileData extends BaseData
         public ?string $webhook_url = null,
         public ?string $return_url = null,
         public ?bool $is_default = null,
-    ) {
-    }
+    ) {}
 }

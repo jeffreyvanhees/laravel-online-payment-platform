@@ -11,9 +11,7 @@ class DeleteWithdrawalRequest extends Request
 {
     protected Method $method = Method::DELETE;
 
-    public function __construct(protected string $withdrawalUid)
-    {
-    }
+    public function __construct(protected string $withdrawalUid) {}
 
     public function resolveEndpoint(): string
     {

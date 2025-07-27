@@ -11,9 +11,7 @@ class DeleteMandateRequest extends Request
 {
     protected Method $method = Method::DELETE;
 
-    public function __construct(protected string $mandateUid)
-    {
-    }
+    public function __construct(protected string $mandateUid) {}
 
     public function resolveEndpoint(): string
     {

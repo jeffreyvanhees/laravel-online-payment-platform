@@ -18,6 +18,5 @@ class PaginatedListResponse extends BaseData
         public int $current_page,
         public int $last_page,
         public DataCollection $data,
-    ) {
-    }
+    ) {}
 }

@@ -16,6 +16,5 @@ class ContactData extends BaseData
         public ?string $birthdate = null,
         public ?array $emailaddresses = null,
         public ?array $phonenumbers = null,
-    ) {
-    }
+    ) {}
 }

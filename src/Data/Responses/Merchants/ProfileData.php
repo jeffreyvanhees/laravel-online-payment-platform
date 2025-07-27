@@ -19,6 +19,5 @@ class ProfileData extends BaseData
         public ?string $status = null,
         public ?string $created_at = null,
         public ?string $updated_at = null,
-    ) {
-    }
+    ) {}
 }

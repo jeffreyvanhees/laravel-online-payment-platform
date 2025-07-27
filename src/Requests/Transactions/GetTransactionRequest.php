@@ -11,9 +11,7 @@ class GetTransactionRequest extends Request
 {
     protected Method $method = Method::GET;
 
-    public function __construct(protected string $transactionUid)
-    {
-    }
+    public function __construct(protected string $transactionUid) {}
 
     public function resolveEndpoint(): string
     {

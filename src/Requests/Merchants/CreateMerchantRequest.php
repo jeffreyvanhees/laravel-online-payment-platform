@@ -19,9 +19,7 @@ class CreateMerchantRequest extends Request implements HasBody
 
     protected Method $method = Method::POST;
 
-    public function __construct(protected CreateConsumerMerchantData|CreateBusinessMerchantData|array $data)
-    {
-    }
+    public function __construct(protected CreateConsumerMerchantData|CreateBusinessMerchantData|array $data) {}
 
     public function resolveEndpoint(): string
     {

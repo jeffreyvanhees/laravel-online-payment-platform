@@ -10,7 +10,7 @@ use Saloon\Http\Response;
 
 /**
  * Subresource for managing merchant settlements
- * 
+ *
  * Provides methods for retrieving settlement information for merchants.
  */
 class SettlementsResource extends BaseResource
@@ -24,10 +24,10 @@ class SettlementsResource extends BaseResource
 
     /**
      * Get settlements for the merchant
-     * 
-     * @param array $params Optional query parameters for filtering settlements
+     *
+     * @param  array  $params  Optional query parameters for filtering settlements
      * @return Response API response containing the merchant's settlements
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When merchant is not found or other API errors
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      */

@@ -5,11 +5,7 @@ declare(strict_types=1);
 namespace JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Transactions;
 
 use JeffreyVanHees\OnlinePaymentPlatform\Data\BaseData;
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Common\ProductData;
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Transactions\BuyerData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Transactions\EscrowData;
-use Spatie\LaravelData\Attributes\DataCollectionOf;
-use Spatie\LaravelData\DataCollection;
 
 class TransactionData extends BaseData
 {
@@ -41,6 +37,5 @@ class TransactionData extends BaseData
         public ?EscrowData $escrow = null,
         public ?array $fees = null,
         public ?array $refunds = null,
-    ) {
-    }
+    ) {}
 }

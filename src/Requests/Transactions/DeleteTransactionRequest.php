@@ -11,9 +11,7 @@ class DeleteTransactionRequest extends Request
 {
     protected Method $method = Method::DELETE;
 
-    public function __construct(protected string $transactionUid)
-    {
-    }
+    public function __construct(protected string $transactionUid) {}
 
     public function resolveEndpoint(): string
     {

@@ -12,7 +12,7 @@ use Saloon\Http\Response;
 
 /**
  * Resource class for managing merchant Ultimate Beneficial Owners (UBOs)
- * 
+ *
  * UBOs are individuals who ultimately own or control a business merchant.
  * This resource handles creating, retrieving, and managing UBO information.
  */
@@ -27,10 +27,10 @@ class UBOsResource extends BaseResource
 
     /**
      * Create a new UBO for the merchant
-     * 
-     * @param array $data UBO data including name, date of birth, residence, etc.
+     *
+     * @param  array  $data  UBO data including name, date of birth, residence, etc.
      * @return Response API response containing the created UBO data
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When required fields are missing
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException For other API errors
@@ -42,10 +42,10 @@ class UBOsResource extends BaseResource
 
     /**
      * Retrieve a specific UBO by UID
-     * 
-     * @param string $uboUid The unique identifier of the UBO
+     *
+     * @param  string  $uboUid  The unique identifier of the UBO
      * @return Response API response containing the UBO data
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When UBO is not found or other API errors
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      */
@@ -56,10 +56,10 @@ class UBOsResource extends BaseResource
 
     /**
      * List all UBOs for the merchant
-     * 
-     * @param array $params Optional query parameters for filtering
+     *
+     * @param  array  $params  Optional query parameters for filtering
      * @return Response API response containing a list of UBOs
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException For other API errors
      */

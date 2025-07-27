@@ -38,7 +38,7 @@ it('can upload a file', function () {
     ];
 
     $uploadResponse = $this->connector->files()->createUpload($uploadData);
-    
+
     // Only test file upload if upload creation was successful
     if ($uploadResponse->successful()) {
         $uploadUid = $uploadResponse->json('uid');
@@ -46,7 +46,7 @@ it('can upload a file', function () {
 
         // Create a simple test file content
         $fileContent = 'This is a test file content for upload testing.';
-        
+
         $response = $this->connector->files()->upload($uploadUrl, $fileContent, 'text/plain');
 
         expect($response->successful())->toBeTrue();

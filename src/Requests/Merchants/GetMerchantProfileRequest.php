@@ -16,8 +16,7 @@ class GetMerchantProfileRequest extends Request
     public function __construct(
         protected string $merchantUid,
         protected string $profileUid
-    ) {
-    }
+    ) {}
 
     public function resolveEndpoint(): string
     {

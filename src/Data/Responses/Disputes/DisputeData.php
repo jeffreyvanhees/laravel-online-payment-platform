@@ -18,6 +18,5 @@ class DisputeData extends BaseData
         public ?string $created_at = null,
         public ?string $updated_at = null,
         public ?string $resolved_at = null,
-    ) {
-    }
+    ) {}
 }

@@ -10,7 +10,7 @@ use Saloon\Http\Response;
 
 /**
  * Subresource for managing merchant addresses
- * 
+ *
  * Provides methods for adding and managing addresses for merchants.
  */
 class AddressesResource extends BaseResource
@@ -24,10 +24,10 @@ class AddressesResource extends BaseResource
 
     /**
      * Add an address to the merchant
-     * 
-     * @param array $data Address data including street, city, postal_code, country, etc.
+     *
+     * @param  array  $data  Address data including street, city, postal_code, country, etc.
      * @return Response API response containing the created address data
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When required address fields are missing
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When merchant is not found or other API errors
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid

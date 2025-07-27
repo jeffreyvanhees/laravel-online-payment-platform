@@ -13,6 +13,5 @@ abstract class PaginatedResponse extends BaseData
     public function __construct(
         public DataCollection $data,
         public MetaData $meta,
-    ) {
-    }
+    ) {}
 }

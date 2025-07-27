@@ -12,6 +12,5 @@ class CreateFileData extends BaseData
         public string $purpose,
         public string $file_path,
         public ?string $description = null,
-    ) {
-    }
+    ) {}
 }

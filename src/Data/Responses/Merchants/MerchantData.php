@@ -6,8 +6,8 @@ namespace JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Merchants;
 
 use JeffreyVanHees\OnlinePaymentPlatform\Data\BaseData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Common\AddressData;
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Common\ContactData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Common\BankAccountData;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Common\ContactData;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\DataCollection;
 
@@ -43,6 +43,5 @@ class MerchantData extends BaseData
         public ?DataCollection $bank_accounts = null,
         #[DataCollectionOf(UBOData::class)]
         public ?DataCollection $ubos = null,
-    ) {
-    }
+    ) {}
 }

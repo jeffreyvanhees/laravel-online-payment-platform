@@ -25,6 +25,5 @@ class CreateTransactionData extends BaseData
         public ?string $description = null,
         public ?string $reference = null,
         public ?array $metadata = null,
-    ) {
-    }
+    ) {}
 }

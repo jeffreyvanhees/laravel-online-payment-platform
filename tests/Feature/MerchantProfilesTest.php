@@ -21,7 +21,7 @@ it('can create a profile for a merchant', function () {
     ];
 
     $merchantResponse = $this->connector->merchants()->create($merchantData);
-    
+
     // Only test profile creation if merchant creation was successful
     if ($merchantResponse->successful()) {
         $merchantUid = $merchantResponse->json('uid');
@@ -63,7 +63,7 @@ it('can retrieve a profile', function () {
     ];
 
     $merchantResponse = $this->connector->merchants()->create($merchantData);
-    
+
     if ($merchantResponse->successful()) {
         $merchantUid = $merchantResponse->json('uid');
 
@@ -76,10 +76,10 @@ it('can retrieve a profile', function () {
         ];
 
         $createResponse = $this->connector->merchants()->profiles($merchantUid)->create($profileData);
-        
+
         if ($createResponse->successful()) {
             $profileUid = $createResponse->json('uid');
-            
+
             // Now retrieve the profile
             $response = $this->connector->merchants()->profiles($merchantUid)->get($profileUid);
 
@@ -108,7 +108,7 @@ it('can list profiles for a merchant', function () {
     ];
 
     $merchantResponse = $this->connector->merchants()->create($merchantData);
-    
+
     if ($merchantResponse->successful()) {
         $merchantUid = $merchantResponse->json('uid');
 

@@ -11,6 +11,5 @@ class MigrateMerchantData extends BaseData
     public function __construct(
         public string $coc_nr,
         public string $country,
-    ) {
-    }
+    ) {}
 }

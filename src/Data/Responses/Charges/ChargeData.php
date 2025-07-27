@@ -20,6 +20,5 @@ class ChargeData extends BaseData
         public ?array $metadata = null,
         public ?string $created_at = null,
         public ?string $updated_at = null,
-    ) {
-    }
+    ) {}
 }

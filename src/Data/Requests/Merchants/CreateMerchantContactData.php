@@ -6,6 +6,4 @@ namespace JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants;
 
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Common\ContactData;
 
-class CreateMerchantContactData extends ContactData
-{
-}
+class CreateMerchantContactData extends ContactData {}

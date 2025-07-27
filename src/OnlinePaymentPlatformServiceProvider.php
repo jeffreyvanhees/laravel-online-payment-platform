@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace JeffreyVanHees\OnlinePaymentPlatform;
 
 use Illuminate\Support\ServiceProvider;
-use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformConnector;
 
 class OnlinePaymentPlatformServiceProvider extends ServiceProvider
 {
@@ -15,7 +14,7 @@ class OnlinePaymentPlatformServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/opp.php',
+            __DIR__.'/../config/opp.php',
             'opp'
         );
 
@@ -48,11 +47,11 @@ class OnlinePaymentPlatformServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->publishes([
-            __DIR__ . '/../config/opp.php' => config_path('opp.php'),
+            __DIR__.'/../config/opp.php' => config_path('opp.php'),
         ], 'opp-config');
 
         $this->publishes([
-            __DIR__ . '/../config/opp.php' => config_path('opp.php'),
+            __DIR__.'/../config/opp.php' => config_path('opp.php'),
         ], 'opp');
     }
 

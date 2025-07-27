@@ -16,6 +16,5 @@ class PaginationData extends BaseData
         public int $items_per_page,
         public int $current_page,
         public int $last_page,
-    ) {
-    }
+    ) {}
 }

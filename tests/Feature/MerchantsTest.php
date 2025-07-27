@@ -3,17 +3,15 @@
 declare(strict_types=1);
 
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateConsumerMerchantData;
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateBusinessMerchantData;
 use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformConnector;
-use Saloon\Lawman\Contracts\RecordsRequests;
 
 beforeEach(function () {
     $this->connector = new OnlinePaymentPlatformConnector($this->getSandboxApiKey(), true);
 });
 
 it('can create a merchant', function () {
-    $randomEmail = 'test_' . uniqid() . '_' . time() . '@example.com';
-    
+    $randomEmail = 'test_'.uniqid().'_'.time().'@example.com';
+
     $merchantData = [
         'type' => 'consumer',
         'country' => 'NLD',
@@ -32,8 +30,8 @@ it('can create a merchant', function () {
 })->group('recording', 'replay', 'merchants');
 
 it('can create a merchant using DTO', function () {
-    $randomEmail = 'test_dto_' . uniqid() . '_' . time() . '@example.com';
-    
+    $randomEmail = 'test_dto_'.uniqid().'_'.time().'@example.com';
+
     $merchantData = new CreateConsumerMerchantData(
         type: 'consumer',
         country: 'NLD',
@@ -49,7 +47,7 @@ it('can create a merchant using DTO', function () {
     expect($response->json())->toHaveKey('uid');
     expect($response->json('type'))->toBe('consumer');
     expect($response->json('notify_url'))->toBe('https://example.com/webhook');
-    
+
     // Test DTO creation from response
     $merchantDto = $response->dto();
     expect($merchantDto)->toBeInstanceOf(\JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Merchants\MerchantData::class);
@@ -71,7 +69,7 @@ it('can retrieve a merchant', function () {
 
     $createResponse = $this->connector->merchants()->create($merchantData);
     $merchantUid = $createResponse->json('uid');
-    
+
     // Now retrieve the merchant
     $response = $this->connector->merchants()->get($merchantUid);
 
@@ -116,12 +114,12 @@ it('can add a contact to a merchant', function () {
         'emailaddresses' => [
             [
                 'emailaddress' => "jane.smith.{$timestamp}@example.com",
-            ]
+            ],
         ],
         'phonenumbers' => [
             [
                 'phonenumber' => '+31612345678',
-            ]
+            ],
         ],
     ];
 

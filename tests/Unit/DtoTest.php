@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateConsumerMerchantData;
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateBusinessMerchantData;
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Transactions\CreateTransactionData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Common\ProductData;
-use Spatie\LaravelData\DataCollection;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateBusinessMerchantData;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateConsumerMerchantData;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Transactions\CreateTransactionData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Merchants\MerchantData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Merchants\MerchantsResponse;
+use Spatie\LaravelData\DataCollection;
 
 it('can create a consumer merchant DTO', function () {
     $dto = new CreateConsumerMerchantData(

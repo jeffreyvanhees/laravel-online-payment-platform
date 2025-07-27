@@ -12,7 +12,7 @@ use Saloon\Http\Response;
 
 /**
  * Resource class for managing charges
- * 
+ *
  * Provides methods for creating, retrieving, and listing charges.
  * Charges represent fees or costs associated with transactions or services.
  */
@@ -20,10 +20,10 @@ class ChargesResource extends BaseResource
 {
     /**
      * Create a new charge
-     * 
-     * @param array $data Charge data including type, amount, from_owner_uid, to_owner_uid, etc.
+     *
+     * @param  array  $data  Charge data including type, amount, from_owner_uid, to_owner_uid, etc.
      * @return Response API response containing the created charge data
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When required fields are missing or invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException For other API errors
@@ -35,10 +35,10 @@ class ChargesResource extends BaseResource
 
     /**
      * Retrieve a specific charge by UID
-     * 
-     * @param string $chargeUid The unique identifier of the charge
+     *
+     * @param  string  $chargeUid  The unique identifier of the charge
      * @return Response API response containing the charge data
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When charge is not found or other API errors
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      */
@@ -49,10 +49,10 @@ class ChargesResource extends BaseResource
 
     /**
      * List charges with optional filtering parameters
-     * 
-     * @param array $params Optional query parameters for filtering (e.g., limit, offset, type)
+     *
+     * @param  array  $params  Optional query parameters for filtering (e.g., limit, offset, type)
      * @return Response API response containing a list of charges
-     * 
+     *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException For other API errors
      */

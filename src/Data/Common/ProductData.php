@@ -15,6 +15,5 @@ class ProductData extends BaseData
         public ?string $description = null,
         public ?string $vat_rate = null,
         public ?array $metadata = null,
-    ) {
-    }
+    ) {}
 }

@@ -85,6 +85,10 @@ Remember to adhere to PHP best practices, follow SaloonPHP conventions, and ensu
 
 ## Development Commands
 
+### Code Quality
+- `composer pint` - Run Laravel Pint for code formatting (run after editing PHP files)
+- `composer pint-test` - Check code formatting without fixing
+
 ### Testing
 - `composer test` - Run all tests using Pest
 - `composer test-coverage` - Run tests with coverage report

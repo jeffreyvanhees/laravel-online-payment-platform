@@ -13,6 +13,5 @@ class CreateDisputeData extends BaseData
         public string $reason,
         public ?string $message = null,
         public ?array $evidence_file_uids = null,
-    ) {
-    }
+    ) {}
 }

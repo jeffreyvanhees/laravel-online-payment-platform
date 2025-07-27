@@ -103,11 +103,11 @@ it('can retrieve a dispute', function () {
     ];
 
     $createResponse = $this->connector->disputes()->create($disputeData);
-    
+
     // Only test retrieval if creation was successful
     if ($createResponse->successful()) {
         $disputeUid = $createResponse->json('uid');
-        
+
         // Now retrieve the dispute
         $response = $this->connector->disputes()->get($disputeUid);
 

@@ -14,7 +14,8 @@
       "Bash(./vendor/bin/pest:*)",
       "Bash(vendor/bin/pest:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(./vendor/bin/pint)"
     ],
     "deny": []
   }

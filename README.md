@@ -25,7 +25,7 @@ A modern Laravel package for integrating with the [Online Payment Platform](http
 
 ## 📋 Requirements
 
-- PHP 8.1 or higher
+- PHP 8.2 or higher
 - Laravel 11.0 or 12.0
 
 ## 🚀 Installation

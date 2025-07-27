@@ -9,7 +9,7 @@ on:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    container: kirschbaumdevelopment/laravel-test-runner:8.1
+    container: kirschbaumdevelopment/laravel-test-runner:8.2
     name: Validate Package
 
     steps:

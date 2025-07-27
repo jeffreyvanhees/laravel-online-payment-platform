@@ -19,7 +19,7 @@ A modern Laravel package for integrating with the [Online Payment Platform](http
 - 🎭 **Facade Support** - Clean, expressive API using Laravel facades
 - 🔧 **SaloonPHP Foundation** - Built on the robust SaloonPHP HTTP client
 - 🧪 **Comprehensive Testing** - HTTP recording/replay for reliable tests
-- 📚 **Intuitive API** - Fluent interface: `Opp::merchants()->contacts()->add()`
+- 📚 **Intuitive API** - Fluent interface: `Opp::merchants()->ubos()->create()`
 - 🔄 **Environment Support** - Seamless sandbox/production switching
 - ⚡ **Exception Handling** - Detailed custom exceptions for all error scenarios
 - 🔄 **Pagination Support** - Built-in pagination with SaloonPHP
@@ -219,6 +219,25 @@ $address = Opp::merchants()->addresses('mer_123456789')->add([
     'zipcode' => '1000 AA',
     'country' => 'NLD',
 ]);
+
+// Manage Ultimate Beneficial Owners (UBOs) for business merchants
+$ubo = Opp::merchants()->ubos('mer_123456789')->create([
+    'name_first' => 'John',
+    'name_last' => 'Doe', 
+    'date_of_birth' => '1980-01-15',
+    'country_of_residence' => 'NLD',
+    'is_decision_maker' => true,
+    'percentage_of_shares' => 25.5,
+]);
+
+// Create merchant profiles for different configurations
+$profile = Opp::merchants()->profiles('mer_123456789')->create([
+    'name' => 'E-commerce Profile',
+    'description' => 'Settings for online store',
+    'webhook_url' => 'https://store.example.com/webhook',
+    'return_url' => 'https://store.example.com/success',
+    'is_default' => false,
+]);
 ```
 
 ### Transactions
@@ -371,9 +390,9 @@ composer replay
 
 The package includes comprehensive tests covering all API endpoints with **53.9% code coverage**:
 
-- ✅ **47 tests** covering all major endpoints
-- ✅ **128 assertions** ensuring functionality  
-- ✅ **Merchant operations** - CRUD, contacts, addresses, bank accounts, settlements
+- ✅ **53 tests** covering all major endpoints
+- ✅ **135 assertions** ensuring functionality  
+- ✅ **Merchant operations** - CRUD, contacts, addresses, bank accounts, settlements, UBOs, profiles
 - ✅ **Transaction lifecycle** - create, retrieve, update, delete
 - ✅ **Payment flows** - charges, mandates, withdrawals, disputes
 - ✅ **File operations** - upload, retrieval, management  

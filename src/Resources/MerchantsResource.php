@@ -14,6 +14,8 @@ use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\ContactsResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\AddressesResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\BankAccountsResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\SettlementsResource;
+use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\UBOsResource;
+use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\ProfilesResource;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 
@@ -110,6 +112,28 @@ class MerchantsResource extends BaseResource
     public function settlements(string $merchantUid): SettlementsResource
     {
         return new SettlementsResource($this->connector, $merchantUid);
+    }
+
+    /**
+     * Access UBOs (Ultimate Beneficial Owners) subresource for a specific merchant
+     * 
+     * @param string $merchantUid The unique identifier of the merchant
+     * @return UBOsResource UBOs subresource instance
+     */
+    public function ubos(string $merchantUid): UBOsResource
+    {
+        return new UBOsResource($this->connector, $merchantUid);
+    }
+
+    /**
+     * Access profiles subresource for a specific merchant
+     * 
+     * @param string $merchantUid The unique identifier of the merchant
+     * @return ProfilesResource Profiles subresource instance
+     */
+    public function profiles(string $merchantUid): ProfilesResource
+    {
+        return new ProfilesResource($this->connector, $merchantUid);
     }
 
 

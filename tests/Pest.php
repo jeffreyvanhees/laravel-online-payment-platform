@@ -30,6 +30,28 @@ expect()->extend('toBeOne', function () {
     return $this->toBe(1);
 });
 
+expect()->extend('toMatchRequest', function (\Saloon\Enums\Method $method, string $endpoint) {
+    $request = $this->value;
+
+    expect($request)->toBeInstanceOf(\Saloon\Http\Request::class);
+    expect($request->getMethod())->toBe($method);
+    expect($request->resolveEndpoint())->toBe($endpoint);
+
+    return $this;
+});
+
+expect()->extend('toHaveRequestBody', function (array $expectedBody) {
+    $request = $this->value;
+    $actualBody = $request->body()->all();
+
+    foreach ($expectedBody as $key => $value) {
+        expect($actualBody)->toHaveKey($key);
+        expect($actualBody[$key])->toBe($value);
+    }
+
+    return $this;
+});
+
 /*
 |--------------------------------------------------------------------------
 | Functions
@@ -41,7 +63,5 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
-{
-    // ..
-}
+// Include test helpers globally
+require_once __DIR__.'/Helpers/TestHelpers.php';

@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffreyvanhees/laravel-online-payment-platform.svg?style=flat-square)](https://packagist.org/packages/jeffreyvanhees/laravel-online-payment-platform)
 [![Tests](https://img.shields.io/github/actions/workflow/status/jeffreyvanhees/laravel-online-payment-platform/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/run-tests.yml)
-[![Coverage](https://img.shields.io/badge/Coverage-60.5%25-orange?style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/coverage.yml)
+[![Coverage](https://img.shields.io/badge/Coverage-70.2%25-brightgreen?style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/coverage.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/jeffreyvanhees/laravel-online-payment-platform.svg?style=flat-square)](https://packagist.org/packages/jeffreyvanhees/laravel-online-payment-platform)
 
 A modern Laravel package for integrating with the [Online Payment Platform](https://onlinepaymentplatform.com) API. Built with [SaloonPHP](https://docs.saloon.dev) and [Spatie Laravel Data](https://spatie.be/docs/laravel-data) for an excellent developer experience.
@@ -268,6 +268,150 @@ $updated = Opp::transactions()->update('tra_987654321', [
 ]);
 ```
 
+### Charges
+
+```php
+// Create charges for balance transfers between merchants
+$charge = Opp::charges()->create([
+    'type' => 'balance',
+    'amount' => 1500, // €15.00 in cents
+    'from_owner_uid' => 'mer_123456789',
+    'to_owner_uid' => 'mer_987654321',
+    'description' => 'Monthly platform fee',
+    'metadata' => ['invoice_id' => 'INV-2024-001'],
+]);
+
+// Retrieve charge details
+$charge = Opp::charges()->get('cha_123456789');
+
+// List charges with filters
+$charges = Opp::charges()->list([
+    'from_owner_uid' => 'mer_123456789',
+    'status' => 'completed',
+    'limit' => 50,
+]);
+```
+
+### Mandates
+
+```php
+// Create SEPA Direct Debit mandate
+$mandate = Opp::mandates()->create([
+    'merchant_uid' => 'mer_123456789',
+    'holder_name' => 'John Doe',
+    'iban' => 'NL91ABNA0417164300',
+    'bic' => 'ABNANL2A',
+    'description' => 'Monthly subscription mandate',
+    'reference' => 'SUBSCRIPTION-2024',
+]);
+
+// Retrieve mandate
+$mandate = Opp::mandates()->get('man_123456789');
+
+// Create transaction using mandate
+$transaction = Opp::mandates()->transactions('man_123456789')->create([
+    'amount' => 2500, // €25.00 in cents
+    'description' => 'Monthly subscription payment',
+]);
+
+// Delete mandate
+Opp::mandates()->delete('man_123456789');
+```
+
+### Withdrawals
+
+```php
+// Create withdrawal to merchant's bank account
+$withdrawal = Opp::withdrawals()->create('mer_123456789', [
+    'amount' => 50000, // €500.00 in cents
+    'currency' => 'EUR',
+    'bank_account_uid' => 'ban_123456789',
+    'description' => 'Weekly payout',
+    'reference' => 'PAYOUT-2024-W01',
+]);
+
+// Retrieve withdrawal status
+$withdrawal = Opp::withdrawals()->get('wit_123456789');
+
+// List withdrawals for a merchant
+$withdrawals = Opp::withdrawals()->list([
+    'merchant_uid' => 'mer_123456789',
+    'status' => 'completed',
+    'limit' => 25,
+]);
+
+// Cancel pending withdrawal
+Opp::withdrawals()->delete('wit_123456789');
+```
+
+### Disputes
+
+```php
+// Create dispute for a transaction
+$dispute = Opp::disputes()->create([
+    'transaction_uid' => 'tra_123456789',
+    'amount' => 1000, // €10.00 in cents
+    'reason' => 'Product not received',
+    'message' => 'Customer claims product was never delivered',
+    'evidence' => [
+        'tracking_number' => 'TRACK123456',
+        'shipping_date' => '2024-01-15',
+    ],
+]);
+
+// Retrieve dispute with transaction details
+$dispute = Opp::disputes()->get('dis_123456789', [
+    'include' => 'transaction',
+]);
+
+// List all disputes
+$disputes = Opp::disputes()->list([
+    'status' => 'pending',
+    'created_after' => '2024-01-01',
+]);
+```
+
+### Files
+
+```php
+// Create file upload token
+$upload = Opp::files()->createUpload([
+    'filename' => 'invoice.pdf',
+    'purpose' => 'dispute_evidence',
+]);
+
+// Upload the actual file
+$file = Opp::files()->upload(
+    fileUid: $upload->dto()->uid,
+    token: $upload->dto()->token,
+    filePath: '/path/to/invoice.pdf',
+    fileName: 'invoice.pdf'
+);
+
+// List uploaded files
+$files = Opp::files()->list([
+    'purpose' => 'dispute_evidence',
+    'created_after' => '2024-01-01',
+]);
+```
+
+### Partners
+
+```php
+// Get partner configuration
+$config = Opp::partners()->getConfiguration();
+
+// Update partner settings
+$updated = Opp::partners()->updateConfiguration([
+    'webhook_url' => 'https://partner.example.com/webhooks',
+    'notification_email' => 'notifications@partner.com',
+    'settings' => [
+        'auto_approve_merchants' => false,
+        'require_vat_number' => true,
+    ],
+]);
+```
+
 ### Pagination
 
 The package supports automatic pagination through SaloonPHP:
@@ -388,10 +532,10 @@ composer replay
 
 ### Test Coverage
 
-The package includes comprehensive tests covering all API endpoints with **60.5% code coverage**:
+The package includes comprehensive tests covering all API endpoints with **70.2% code coverage**:
 
-- ✅ **107 tests** covering all major endpoints and DTOs  
-- ✅ **386 assertions** ensuring functionality  
+- ✅ **214 tests** covering all major endpoints and DTOs  
+- ✅ **907 assertions** ensuring functionality  
 - ✅ **Merchant operations** - CRUD, contacts, addresses, bank accounts, settlements, UBOs, profiles
 - ✅ **Transaction lifecycle** - create, retrieve, update, delete
 - ✅ **Payment flows** - charges, mandates, withdrawals, disputes

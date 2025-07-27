@@ -21,21 +21,10 @@ class OnlinePaymentPlatformServiceProvider extends ServiceProvider
         $this->app->singleton(OnlinePaymentPlatformConnector::class, function ($app) {
             $config = $app['config']['opp'];
 
-            $connector = new OnlinePaymentPlatformConnector(
+            return new OnlinePaymentPlatformConnector(
                 $config['api_key'] ?? '',
                 $config['sandbox'] ?? true
             );
-
-            // Apply HTTP configuration
-            if (isset($config['http']['timeout'])) {
-                $connector->timeout($config['http']['timeout']);
-            }
-
-            if (isset($config['http']['connect_timeout'])) {
-                $connector->connectTimeout($config['http']['connect_timeout']);
-            }
-
-            return $connector;
         });
 
         $this->app->alias(OnlinePaymentPlatformConnector::class, 'opp');

@@ -24,7 +24,7 @@ class OnlinePaymentPlatformResponseHandler
         match ($statusCode) {
             401 => throw AuthenticationException::invalidApiKey(),
             422 => throw ValidationException::invalidData($body['errors'] ?? []),
-            429 => throw RateLimitException::exceeded($response->header('Retry-After')),
+            429 => throw RateLimitException::exceeded($response->header('Retry-After') ? (int) $response->header('Retry-After') : null),
             404 => throw ApiException::notFound(),
             500, 502, 503, 504 => throw ApiException::serverError(),
             default => throw ApiException::fromResponse($body, $statusCode),

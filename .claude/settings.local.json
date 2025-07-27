@@ -15,7 +15,9 @@
       "Bash(vendor/bin/pest:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(./vendor/bin/pint)"
+      "Bash(./vendor/bin/pint)",
+      "Bash(./vendor/bin/pint tests/Unit/Data/ProfileDataTest.php)",
+      "Bash(./vendor/bin/pint:*)"
     ],
     "deny": []
   }

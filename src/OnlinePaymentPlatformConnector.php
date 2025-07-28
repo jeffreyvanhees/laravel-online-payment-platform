@@ -10,6 +10,7 @@ use JeffreyVanHees\OnlinePaymentPlatform\Resources\FilesResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\MandatesResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\MerchantsResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\PartnersResource;
+use JeffreyVanHees\OnlinePaymentPlatform\Resources\SettlementsResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\TransactionsResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\WithdrawalsResource;
 use Saloon\Contracts\Authenticator;
@@ -176,6 +177,16 @@ class OnlinePaymentPlatformConnector extends Connector implements HasBody, HasPa
     public function partners(): PartnersResource
     {
         return new PartnersResource($this);
+    }
+
+    /**
+     * Get the settlements resource for settlement-related operations
+     *
+     * @return SettlementsResource Settlements resource instance
+     */
+    public function settlements(): SettlementsResource
+    {
+        return new SettlementsResource($this);
     }
 
     /**

@@ -18,5 +18,14 @@ class RefundData extends BaseData
         public ?string $created_at = null,
         public ?string $updated_at = null,
         public ?string $processed_at = null,
+        // New fields for API compatibility
+        public ?string $internal_reason = null,
+        public ?int $created = null,
+        public ?int $updated = null,
+        public ?int $paid = null,
+        public ?array $fees = null,
+        public ?array $metadata = null,
+        public ?bool $livemode = null,
+        public ?string $object = null,
     ) {}
 }

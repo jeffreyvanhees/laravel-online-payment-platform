@@ -10,6 +10,7 @@ use JeffreyVanHees\OnlinePaymentPlatform\Requests\Transactions\DeleteTransaction
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Transactions\GetTransactionRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Transactions\GetTransactionsRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Transactions\UpdateTransactionRequest;
+use JeffreyVanHees\OnlinePaymentPlatform\Resources\Transactions\RefundsResource;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 
@@ -92,5 +93,16 @@ class TransactionsResource extends BaseResource
     public function delete(string $transactionUid): Response
     {
         return $this->connector->send(new DeleteTransactionRequest($transactionUid));
+    }
+
+    /**
+     * Access refunds subresource for a specific transaction
+     *
+     * @param  string  $transactionUid  The unique identifier of the transaction
+     * @return RefundsResource Refunds subresource instance
+     */
+    public function refunds(string $transactionUid): RefundsResource
+    {
+        return new RefundsResource($this->connector, $transactionUid);
     }
 }

@@ -11,12 +11,13 @@ class FileData extends BaseData
     public function __construct(
         public string $uid,
         public string $purpose,
-        public string $filename,
-        public int $size,
-        public string $mime_type,
+        public string $merchant_uid,
+        public string $object_uid,
+        public string $token,
         public string $url,
-        public ?string $description = null,
-        public ?string $created_at = null,
-        public ?string $updated_at = null,
+        public int $created,
+        public int $updated,
+        public int $expired,
+        public ?array $metadata = null,
     ) {}
 }

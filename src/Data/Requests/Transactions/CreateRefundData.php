@@ -11,6 +11,7 @@ class CreateRefundData extends BaseData
     public function __construct(
         public int $amount, // in cents
         public ?string $payout_description = null,
-        public ?string $message = null,
+        public ?string $internal_reason = null,
+        public ?array $metadata = null,
     ) {}
 }

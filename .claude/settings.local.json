@@ -17,7 +17,10 @@
       "Bash(git commit:*)",
       "Bash(./vendor/bin/pint)",
       "Bash(./vendor/bin/pint tests/Unit/Data/ProfileDataTest.php)",
-      "Bash(./vendor/bin/pint:*)"
+      "Bash(./vendor/bin/pint:*)",
+      "mcp__context7__resolve-library-id",
+      "Bash(compgen:*)",
+      "mcp__context7__get-library-docs"
     ],
     "deny": []
   }

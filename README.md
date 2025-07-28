@@ -210,6 +210,9 @@ $consumerData = new CreateConsumerMerchantData(
 
 $consumer = OnlinePaymentPlatform::merchants()->create($consumerData);
 
+// Note: For consumer merchants, name_first/name_last in requests become 'name' field in responses
+// For business merchants, legal_name in requests becomes 'name' field in responses
+
 // Create business merchant
 $businessData = new CreateBusinessMerchantData(
     type: 'business',

@@ -8,10 +8,18 @@ use JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException;
 use JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException;
 use JeffreyVanHees\OnlinePaymentPlatform\Exceptions\RateLimitException;
 use JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException;
+use JsonException;
 use Saloon\Http\Response;
 
 class OnlinePaymentPlatformResponseHandler
 {
+    /**
+     * @throws AuthenticationException
+     * @throws ValidationException
+     * @throws RateLimitException
+     * @throws ApiException
+     * @throws JsonException
+     */
     public static function handle(Response $response): Response
     {
         if ($response->successful()) {

@@ -110,7 +110,7 @@ if ($response->successful()) {
 
 ### Using Dependency Injection
 
-Inject the connector directly into your classes:
+Inject the connector directly into your classes (or create instances using the `make()` method):
 
 ```php
 <?php
@@ -135,6 +135,15 @@ class PaymentService
         }
 
         return $response->dto()->uid;
+    }
+    
+    // Or create connector instances directly
+    public function createQuickConnection(): OnlinePaymentPlatformConnector
+    {
+        return OnlinePaymentPlatformConnector::make(
+            apiKey: config('opp.api_key'),
+            sandbox: config('opp.sandbox')
+        );
     }
 }
 ```
@@ -687,10 +696,14 @@ Coverage reports are generated in multiple formats:
 ```php
 use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformConnector;
 
+// Using constructor
 $connector = new OnlinePaymentPlatformConnector(
     apiKey: 'your-api-key',
     sandbox: true
 );
+
+// Or using the static make() method
+$connector = OnlinePaymentPlatformConnector::make('your-api-key', true);
 
 // Add custom middleware
 $connector->middleware()->onRequest(function ($request) {

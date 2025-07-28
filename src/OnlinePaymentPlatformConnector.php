@@ -22,6 +22,7 @@ use Saloon\Http\Response;
 use Saloon\PaginationPlugin\Contracts\HasPagination;
 use Saloon\PaginationPlugin\PagedPaginator;
 use Saloon\Traits\Body\HasJsonBody;
+use Saloon\Traits\Makeable;
 
 /**
  * Main connector class for the Online Payment Platform API
@@ -31,7 +32,7 @@ use Saloon\Traits\Body\HasJsonBody;
  */
 class OnlinePaymentPlatformConnector extends Connector implements HasBody, HasPagination
 {
-    use HasJsonBody;
+    use HasJsonBody, Makeable;
 
     /**
      * Initialize the OPP API connector

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \JeffreyVanHees\OnlinePaymentPlatform\Resources\DisputesResource disputes()
  * @method static \JeffreyVanHees\OnlinePaymentPlatform\Resources\FilesResource files()
  * @method static \JeffreyVanHees\OnlinePaymentPlatform\Resources\PartnersResource partners()
+ * @method static \JeffreyVanHees\OnlinePaymentPlatform\Resources\SettlementsResource settlements()
  *
  * @see \JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformConnector
  */

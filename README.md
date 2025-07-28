@@ -19,7 +19,7 @@ A modern Laravel package for integrating with the [Online Payment Platform](http
 - 🎭 **Facade Support** - Clean, expressive API using Laravel facades
 - 🔧 **SaloonPHP Foundation** - Built on the robust SaloonPHP HTTP client
 - 🧪 **Comprehensive Testing** - HTTP recording/replay for reliable tests
-- 📚 **Intuitive API** - Fluent interface: `Opp::merchants()->ubos()->create()`
+- 📚 **Intuitive API** - Fluent interface: `OnlinePaymentPlatform::merchants()->ubos()->create()`
 - 🔄 **Environment Support** - Seamless sandbox/production switching
 - ⚡ **Exception Handling** - Detailed custom exceptions for all error scenarios
 - 🔄 **Pagination Support** - Built-in pagination with SaloonPHP
@@ -70,17 +70,19 @@ The facade provides the cleanest and most Laravel-like API:
 ```php
 <?php
 
-use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformFacade as Opp;
+use OnlinePaymentPlatform;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateConsumerMerchantData;
 
-// Create a consumer merchant using configured URLs
-$response = Opp::merchants()->create([
-    'type' => 'consumer',
-    'country' => 'NLD',
-    'emailaddress' => 'john.doe@example.com',
-    'first_name' => 'John',
-    'last_name' => 'Doe',
-]);
+// Create a consumer merchant using DTO
+$merchantData = new CreateConsumerMerchantData(
+    type: 'consumer',
+    country: 'NLD',
+    emailaddress: 'john.doe@example.com',
+    first_name: 'John',
+    last_name: 'Doe',
+);
+
+$response = OnlinePaymentPlatform::merchants()->create($merchantData);
 
 if ($response->successful()) {
     $merchant = $response->dto();
@@ -106,9 +108,9 @@ class PaymentService
         private OnlinePaymentPlatformConnector $opp
     ) {}
 
-    public function createMerchant(array $data): string
+    public function createMerchant(CreateConsumerMerchantData $merchantData): string
     {
-        $response = $this->opp->merchants()->create($data);
+        $response = $this->opp->merchants()->create($merchantData);
         
         if (!$response->successful()) {
             throw new \Exception('Failed to create merchant');
@@ -126,7 +128,7 @@ For maximum type safety and IDE support, use the provided Data Transfer Objects:
 ```php
 <?php
 
-use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformFacade as Opp;
+use OnlinePaymentPlatform;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateConsumerMerchantData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Transactions\CreateTransactionData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Common\ProductData;
@@ -141,7 +143,7 @@ $merchantData = new CreateConsumerMerchantData(
     notify_url: 'https://yoursite.com/webhooks/opp'
 );
 
-$merchantResponse = Opp::merchants()->create($merchantData);
+$merchantResponse = OnlinePaymentPlatform::merchants()->create($merchantData);
 $merchant = $merchantResponse->dto();
 
 // Create transaction with products
@@ -159,7 +161,7 @@ $transactionData = new CreateTransactionData(
     ])
 );
 
-$transactionResponse = Opp::transactions()->create($transactionData);
+$transactionResponse = OnlinePaymentPlatform::transactions()->create($transactionData);
 $transaction = $transactionResponse->dto();
 
 echo "Payment URL: {$transaction->redirect_url}";
@@ -167,34 +169,60 @@ echo "Payment URL: {$transaction->redirect_url}";
 
 ## 📚 API Documentation
 
+### 📋 API Endpoints Index
+
+- **[Merchants](#merchants)** - Create consumer/business merchants, manage contacts, addresses, UBOs, and profiles
+- **[Transactions](#transactions)** - Create payments, retrieve status, update transaction details  
+- **[Refunds](#refunds)** - Process transaction refunds and list refund history
+- **[Global Settlements](#global-settlements)** - Platform-wide settlement reporting and detailed rows
+- **[Charges](#charges)** - Balance transfers between merchants and fee management
+- **[Mandates](#mandates)** - SEPA Direct Debit mandates and recurring transactions
+- **[Withdrawals](#withdrawals)** - Merchant payouts to bank accounts
+- **[Disputes](#disputes)** - Handle transaction disputes and chargebacks
+- **[Files](#files)** - Upload and manage documents for verification/evidence
+- **[Partners](#partners)** - Partner configuration and settings management
+- **[Pagination](#pagination)** - Handle paginated API responses
+
+---
+
 ### Merchants
 
 ```php
-// Create merchants
-$consumer = Opp::merchants()->create([
-    'type' => 'consumer',
-    'country' => 'NLD',
-    'emailaddress' => 'user@example.com',
-    'first_name' => 'John',
-    'last_name' => 'Doe',
-    'notify_url' => 'https://yoursite.com/webhooks/opp',
-]);
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\{
+    CreateConsumerMerchantData,
+    CreateBusinessMerchantData
+};
 
-$business = Opp::merchants()->create([
-    'type' => 'business',
-    'country' => 'NLD',
-    'emailaddress' => 'business@example.com',
-    'coc_nr' => '12345678',
-    'legal_name' => 'Example B.V.',
-    'notify_url' => 'https://yoursite.com/webhooks/opp',
-]);
+// Create consumer merchant
+$consumerData = new CreateConsumerMerchantData(
+    type: 'consumer',
+    country: 'NLD',
+    emailaddress: 'user@example.com',
+    first_name: 'John',
+    last_name: 'Doe',
+    notify_url: 'https://yoursite.com/webhooks/opp',
+);
+
+$consumer = OnlinePaymentPlatform::merchants()->create($consumerData);
+
+// Create business merchant
+$businessData = new CreateBusinessMerchantData(
+    type: 'business',
+    country: 'NLD',
+    emailaddress: 'business@example.com',
+    coc_nr: '12345678',
+    legal_name: 'Example B.V.',
+    notify_url: 'https://yoursite.com/webhooks/opp',
+);
+
+$business = OnlinePaymentPlatform::merchants()->create($businessData);
 
 // Retrieve and list merchants
-$merchant = Opp::merchants()->get('mer_123456789');
-$merchants = Opp::merchants()->list(['limit' => 50]);
+$merchant = OnlinePaymentPlatform::merchants()->get('mer_123456789');
+$merchants = OnlinePaymentPlatform::merchants()->list(['limit' => 50]);
 
 // Add contacts and addresses
-$contact = Opp::merchants()->contacts('mer_123456789')->add([
+$contact = OnlinePaymentPlatform::merchants()->contacts('mer_123456789')->add([
     'type' => 'representative',
     'gender' => 'm',
     'title' => 'mr',
@@ -212,7 +240,7 @@ $contact = Opp::merchants()->contacts('mer_123456789')->add([
     ],
 ]);
 
-$address = Opp::merchants()->addresses('mer_123456789')->add([
+$address = OnlinePaymentPlatform::merchants()->addresses('mer_123456789')->add([
     'type' => 'business',
     'address_line_1' => 'Main Street 123',
     'city' => 'Amsterdam',
@@ -221,7 +249,7 @@ $address = Opp::merchants()->addresses('mer_123456789')->add([
 ]);
 
 // Manage Ultimate Beneficial Owners (UBOs) for business merchants
-$ubo = Opp::merchants()->ubos('mer_123456789')->create([
+$ubo = OnlinePaymentPlatform::merchants()->ubos('mer_123456789')->create([
     'name_first' => 'John',
     'name_last' => 'Doe', 
     'date_of_birth' => '1980-01-15',
@@ -231,7 +259,7 @@ $ubo = Opp::merchants()->ubos('mer_123456789')->create([
 ]);
 
 // Create merchant profiles for different configurations
-$profile = Opp::merchants()->profiles('mer_123456789')->create([
+$profile = OnlinePaymentPlatform::merchants()->profiles('mer_123456789')->create([
     'name' => 'E-commerce Profile',
     'description' => 'Settings for online store',
     'webhook_url' => 'https://store.example.com/webhook',
@@ -244,7 +272,7 @@ $profile = Opp::merchants()->profiles('mer_123456789')->create([
 
 ```php
 // Create transactions
-$transaction = Opp::transactions()->create([
+$transaction = OnlinePaymentPlatform::transactions()->create([
     'merchant_uid' => 'mer_123456789',
     'total_price' => 1000, // €10.00 in cents
     'products' => [
@@ -259,20 +287,81 @@ $transaction = Opp::transactions()->create([
 ]);
 
 // Retrieve and list transactions
-$transaction = Opp::transactions()->get('tra_987654321');
-$transactions = Opp::transactions()->list(['limit' => 100]);
+$transaction = OnlinePaymentPlatform::transactions()->get('tra_987654321');
+$transactions = OnlinePaymentPlatform::transactions()->list(['limit' => 100]);
 
 // Update transaction
-$updated = Opp::transactions()->update('tra_987654321', [
+$updated = OnlinePaymentPlatform::transactions()->update('tra_987654321', [
     'description' => 'Updated description',
 ]);
+```
+
+### Refunds
+
+```php
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Transactions\CreateRefundData;
+
+// Create a refund for a transaction
+$refundData = new CreateRefundData(
+    amount: 1000, // €10.00 in cents
+    payout_description: 'Refund for defective product',
+    internal_reason: 'product_defect',
+    metadata: ['reason' => 'customer_complaint']
+);
+
+$refund = OnlinePaymentPlatform::transactions()->refunds('tra_123456789')->create($refundData);
+
+// List all refunds for a transaction
+$refunds = OnlinePaymentPlatform::transactions()->refunds('tra_123456789')->list();
+
+// Access refund data
+if ($refund->successful()) {
+    $refundData = $refund->dto();
+    echo "Refund created: {$refundData->uid}";
+    echo "Status: {$refundData->status}";
+    echo "Amount: {$refundData->amount} cents";
+}
+```
+
+### Global Settlements
+
+```php
+// List all platform settlements
+$settlements = OnlinePaymentPlatform::settlements()->list([
+    'status' => 'completed',
+    'limit' => 50
+]);
+
+// Get detailed settlement specification rows
+$settlementRows = OnlinePaymentPlatform::settlements()->specificationRows(
+    settlementUid: 'set_123456789',
+    specificationUid: 'spec_987654321'
+);
+
+// Access settlement data
+foreach ($settlements->dto()->data as $settlement) {
+    echo "Settlement: {$settlement->uid}";
+    echo "Status: {$settlement->status}";
+    echo "Total Amount: {$settlement->total_amount}";
+    echo "Period: {$settlement->period_start} - {$settlement->period_end}";
+}
+
+// Access settlement row details
+foreach ($settlementRows->dto()->data as $row) {
+    echo "Type: {$row->type}";
+    echo "Reference: {$row->reference}";
+    echo "Amount: {$row->amount}";
+    if ($row->amount_payable) {
+        echo "Amount Payable: {$row->amount_payable}";
+    }
+}
 ```
 
 ### Charges
 
 ```php
 // Create charges for balance transfers between merchants
-$charge = Opp::charges()->create([
+$charge = OnlinePaymentPlatform::charges()->create([
     'type' => 'balance',
     'amount' => 1500, // €15.00 in cents
     'from_owner_uid' => 'mer_123456789',
@@ -282,10 +371,10 @@ $charge = Opp::charges()->create([
 ]);
 
 // Retrieve charge details
-$charge = Opp::charges()->get('cha_123456789');
+$charge = OnlinePaymentPlatform::charges()->get('cha_123456789');
 
 // List charges with filters
-$charges = Opp::charges()->list([
+$charges = OnlinePaymentPlatform::charges()->list([
     'from_owner_uid' => 'mer_123456789',
     'status' => 'completed',
     'limit' => 50,
@@ -296,7 +385,7 @@ $charges = Opp::charges()->list([
 
 ```php
 // Create SEPA Direct Debit mandate
-$mandate = Opp::mandates()->create([
+$mandate = OnlinePaymentPlatform::mandates()->create([
     'merchant_uid' => 'mer_123456789',
     'holder_name' => 'John Doe',
     'iban' => 'NL91ABNA0417164300',
@@ -306,23 +395,23 @@ $mandate = Opp::mandates()->create([
 ]);
 
 // Retrieve mandate
-$mandate = Opp::mandates()->get('man_123456789');
+$mandate = OnlinePaymentPlatform::mandates()->get('man_123456789');
 
 // Create transaction using mandate
-$transaction = Opp::mandates()->transactions('man_123456789')->create([
+$transaction = OnlinePaymentPlatform::mandates()->transactions('man_123456789')->create([
     'amount' => 2500, // €25.00 in cents
     'description' => 'Monthly subscription payment',
 ]);
 
 // Delete mandate
-Opp::mandates()->delete('man_123456789');
+OnlinePaymentPlatform::mandates()->delete('man_123456789');
 ```
 
 ### Withdrawals
 
 ```php
 // Create withdrawal to merchant's bank account
-$withdrawal = Opp::withdrawals()->create('mer_123456789', [
+$withdrawal = OnlinePaymentPlatform::withdrawals()->create('mer_123456789', [
     'amount' => 50000, // €500.00 in cents
     'currency' => 'EUR',
     'bank_account_uid' => 'ban_123456789',
@@ -331,24 +420,24 @@ $withdrawal = Opp::withdrawals()->create('mer_123456789', [
 ]);
 
 // Retrieve withdrawal status
-$withdrawal = Opp::withdrawals()->get('wit_123456789');
+$withdrawal = OnlinePaymentPlatform::withdrawals()->get('wit_123456789');
 
 // List withdrawals for a merchant
-$withdrawals = Opp::withdrawals()->list([
+$withdrawals = OnlinePaymentPlatform::withdrawals()->list([
     'merchant_uid' => 'mer_123456789',
     'status' => 'completed',
     'limit' => 25,
 ]);
 
 // Cancel pending withdrawal
-Opp::withdrawals()->delete('wit_123456789');
+OnlinePaymentPlatform::withdrawals()->delete('wit_123456789');
 ```
 
 ### Disputes
 
 ```php
 // Create dispute for a transaction
-$dispute = Opp::disputes()->create([
+$dispute = OnlinePaymentPlatform::disputes()->create([
     'transaction_uid' => 'tra_123456789',
     'amount' => 1000, // €10.00 in cents
     'reason' => 'Product not received',
@@ -360,12 +449,12 @@ $dispute = Opp::disputes()->create([
 ]);
 
 // Retrieve dispute with transaction details
-$dispute = Opp::disputes()->get('dis_123456789', [
+$dispute = OnlinePaymentPlatform::disputes()->get('dis_123456789', [
     'include' => 'transaction',
 ]);
 
 // List all disputes
-$disputes = Opp::disputes()->list([
+$disputes = OnlinePaymentPlatform::disputes()->list([
     'status' => 'pending',
     'created_after' => '2024-01-01',
 ]);
@@ -375,13 +464,13 @@ $disputes = Opp::disputes()->list([
 
 ```php
 // Create file upload token
-$upload = Opp::files()->createUpload([
+$upload = OnlinePaymentPlatform::files()->createUpload([
     'filename' => 'invoice.pdf',
     'purpose' => 'dispute_evidence',
 ]);
 
 // Upload the actual file
-$file = Opp::files()->upload(
+$file = OnlinePaymentPlatform::files()->upload(
     fileUid: $upload->dto()->uid,
     token: $upload->dto()->token,
     filePath: '/path/to/invoice.pdf',
@@ -389,7 +478,7 @@ $file = Opp::files()->upload(
 );
 
 // List uploaded files
-$files = Opp::files()->list([
+$files = OnlinePaymentPlatform::files()->list([
     'purpose' => 'dispute_evidence',
     'created_after' => '2024-01-01',
 ]);
@@ -399,10 +488,10 @@ $files = Opp::files()->list([
 
 ```php
 // Get partner configuration
-$config = Opp::partners()->getConfiguration();
+$config = OnlinePaymentPlatform::partners()->getConfiguration();
 
 // Update partner settings
-$updated = Opp::partners()->updateConfiguration([
+$updated = OnlinePaymentPlatform::partners()->updateConfiguration([
     'webhook_url' => 'https://partner.example.com/webhooks',
     'notification_email' => 'notifications@partner.com',
     'settings' => [
@@ -418,7 +507,7 @@ The package supports automatic pagination through SaloonPHP:
 
 ```php
 // Get paginated results
-$paginator = Opp::merchants()->list(['limit' => 25]);
+$paginator = OnlinePaymentPlatform::merchants()->list(['limit' => 25]);
 
 // Iterate through all pages
 foreach ($paginator->paginate() as $response) {
@@ -487,7 +576,7 @@ use JeffreyVanHees\OnlinePaymentPlatform\Exceptions\{
 };
 
 try {
-    $response = Opp::merchants()->create($invalidData);
+    $response = OnlinePaymentPlatform::merchants()->create($invalidData);
 } catch (ValidationException $e) {
     // Handle validation errors
     $errors = $e->getValidationErrors();
@@ -550,33 +639,9 @@ Coverage reports are generated in multiple formats:
 
 ## 📖 Advanced Usage
 
-### Service Provider Registration
-
-You can bind custom configurations in your `AppServiceProvider`:
-
-```php
-<?php
-
-namespace App\Providers;
-
-use Illuminate\Support\ServiceProvider;
-use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformConnector;
-
-class AppServiceProvider extends ServiceProvider
-{
-    public function register(): void
-    {
-        $this->app->singleton(OnlinePaymentPlatformConnector::class, function ($app) {
-            return new OnlinePaymentPlatformConnector(
-                apiKey: config('opp.api_key'),
-                sandbox: config('opp.sandbox')
-            );
-        });
-    }
-}
-```
-
 ### Custom HTTP Client Configuration
+
+> **Note**: The package automatically registers the connector in Laravel's service container using the configuration from `config/opp.php`. No manual service provider binding is needed.
 
 ```php
 use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformConnector;

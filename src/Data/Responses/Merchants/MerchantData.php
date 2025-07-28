@@ -17,7 +17,7 @@ class MerchantData extends BaseData
         public string $uid,
         public string $type,
         public string $status,
-        public string $country,
+        public ?string $country,
         public ?string $emailaddress = null,
         public ?string $first_name = null,
         public ?string $last_name = null,

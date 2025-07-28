@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JeffreyVanHees\OnlinePaymentPlatform\Tests;
 
+use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Spatie\LaravelData\LaravelDataServiceProvider;
 
@@ -18,6 +19,14 @@ abstract class TestCase extends BaseTestCase
     {
         return [
             LaravelDataServiceProvider::class,
+            OnlinePaymentPlatformServiceProvider::class,
+        ];
+    }
+
+    protected function getPackageAliases($app): array
+    {
+        return [
+            'OnlinePaymentPlatform' => \JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformFacade::class,
         ];
     }
 

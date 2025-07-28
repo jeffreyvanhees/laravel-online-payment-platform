@@ -167,6 +167,17 @@ $transaction = $transactionResponse->dto();
 echo "Payment URL: {$transaction->redirect_url}";
 ```
 
+## ✨ Key Benefits
+
+- **🛡️ Type Safety**: Fully typed DTOs prevent runtime errors and provide excellent IDE support
+- **🎭 Facade Integration**: Clean Laravel facade with auto-discovery - no manual setup required
+- **🔧 Flexible Usage**: Use DTOs for type safety or arrays for quick prototyping
+- **⚡ Auto-Pagination**: Automatically handles paginated responses across all pages
+- **🔄 Environment Support**: Seamless sandbox/production switching with configuration
+- **📦 Service Container**: Native Laravel dependency injection support
+- **🧪 Comprehensive Testing**: 70%+ code coverage with production-ready test suite
+- **🚀 SaloonPHP Power**: Built on robust HTTP client with middleware and retry logic
+
 ## 📚 API Documentation
 
 ### 📋 API Endpoints Index
@@ -503,28 +514,43 @@ $updated = OnlinePaymentPlatform::partners()->updateConfiguration([
 
 ### Pagination
 
-The package supports automatic pagination through SaloonPHP:
+When building API integrations, you may encounter scenarios where the server doesn't provide all results in a single response. Instead, it divides results into several pages. This strategy is called pagination, and integrating it into your application can be tedious and repetitive.
+
+With this SDK, you can leverage SaloonPHP's powerful pagination plugin to reduce boilerplate code and iterate through every result across every page in one loop. **When you set a limit, it will automatically fetch as many pages as necessary to get all results.**
 
 ```php
-// Get paginated results
-$paginator = OnlinePaymentPlatform::merchants()->list(['limit' => 25]);
+// Get single page of results
+$response = OnlinePaymentPlatform::merchants()->list(['limit' => 25]);
+$merchants = $response->dto();
 
-// Iterate through all pages
-foreach ($paginator->paginate() as $response) {
+// Process single page
+foreach ($merchants->data as $merchant) {
+    echo "Merchant: {$merchant->uid} - {$merchant->emailaddress}\n";
+}
+
+// ✨ Magic: Iterate through ALL pages automatically
+foreach (OnlinePaymentPlatform::merchants()->list(['limit' => 25])->paginate() as $response) {
     $merchants = $response->dto();
     
     foreach ($merchants->data as $merchant) {
         echo "Merchant: {$merchant->uid} - {$merchant->emailaddress}\n";
     }
+    
+    echo "Processed page with " . count($merchants->data) . " merchants\n";
 }
+
+// The paginate() method handles all the complexity:
+// - Automatically fetches next pages
+// - Handles different pagination strategies  
+// - Stops when no more results
+// - Memory efficient iteration
 ```
 
-### Benefits
-
-- **Centralized Configuration**: Set URLs once in `.env` file
-- **Environment-Specific**: Different URLs for development, staging, production
-- **Default Values**: Automatically use configured URLs across your app
-- **Override Capability**: Still override URLs per request when needed
+**Key Benefits:**
+- **Automatic**: No manual page tracking or URL construction
+- **Memory Efficient**: Processes one page at a time, not all at once
+- **Error Resilient**: Handles API errors gracefully
+- **Flexible**: Works with any limit size you specify
 
 ## ⚙️ Configuration
 

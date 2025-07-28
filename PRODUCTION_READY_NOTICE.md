@@ -41,18 +41,6 @@ This SDK has been cleaned up to remove speculative properties, but **REQUIRES VE
    - New global settlements DTO created separate from merchant settlements
    - Core fields: `uid`, `status`, `period_start`, `period_end`, `total_amount`, `payout_type`
 
-### New Endpoints Implemented
-
-4. **Complete Refunds API**
-   - `POST /transactions/{uid}/refunds` - Create refund
-   - `GET /transactions/{uid}/refunds` - List transaction refunds
-   - Proper `RefundsResponse` with DataCollection of `RefundData`
-
-5. **Global Settlements API**
-   - `GET /settlements` - List all settlements
-   - `GET /settlements/{uid}/specifications/{spec_uid}/rows` - Get detailed settlement rows
-   - Separate from merchant-specific settlements for platform-wide financial reporting
-
 ### Next Steps
 
 1. Request actual API documentation from Online Payment Platform

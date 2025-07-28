@@ -704,6 +704,8 @@ $connector = new OnlinePaymentPlatformConnector(
 
 // Or using the static make() method
 $connector = OnlinePaymentPlatformConnector::make('your-api-key', true);
+$connector = OnlinePaymentPlatformConnector::make('your-api-key'); // defaults to sandbox
+$connector = OnlinePaymentPlatformConnector::make('your-api-key', false); // production
 
 // Add custom middleware
 $connector->middleware()->onRequest(function ($request) {

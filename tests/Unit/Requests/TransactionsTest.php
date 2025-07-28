@@ -17,7 +17,7 @@ describe('Transactions Requests', function () {
         test('it has correct method and endpoint', function () {
             $data = [
                 'merchant_uid' => 'mer_123456789',
-                'amount' => 2500,
+                'total_price' => 2500,
                 'currency' => 'EUR',
             ];
             $request = new CreateTransactionRequest($data);
@@ -46,7 +46,7 @@ describe('Transactions Requests', function () {
         test('it accepts array data', function () {
             $data = [
                 'merchant_uid' => 'mer_987654321',
-                'amount' => 1500,
+                'total_price' => 1500,
                 'currency' => 'EUR',
                 'payment_method' => 'ideal',
                 'return_url' => 'https://example.com/return',
@@ -55,7 +55,7 @@ describe('Transactions Requests', function () {
 
             $body = $request->body()->all();
             expect($body['merchant_uid'])->toBe('mer_987654321');
-            expect($body['amount'])->toBe(1500);
+            expect($body['total_price'])->toBe(1500);
             expect($body['currency'])->toBe('EUR');
             expect($body['payment_method'])->toBe('ideal');
             expect($body['return_url'])->toBe('https://example.com/return');

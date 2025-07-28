@@ -15,7 +15,7 @@ it('can create a UBO for a business merchant', function () {
         'type' => 'business',
         'country' => 'NLD',
         'emailaddress' => "ubo.test.{$timestamp}@example.com",
-        'company_name' => 'UBO Test Company BV',
+        'legal_name' => 'UBO Test Company BV',
         'notify_url' => 'https://example.com/notify',
     ];
 
@@ -57,7 +57,7 @@ it('can retrieve a UBO', function () {
         'type' => 'business',
         'country' => 'NLD',
         'emailaddress' => "retrieve.ubo.{$timestamp}@example.com",
-        'company_name' => 'Retrieve UBO Test Company BV',
+        'legal_name' => 'Retrieve UBO Test Company BV',
         'notify_url' => 'https://example.com/notify',
     ];
 
@@ -102,7 +102,7 @@ it('can list UBOs for a merchant', function () {
         'type' => 'business',
         'country' => 'NLD',
         'emailaddress' => "list.ubo.{$timestamp}@example.com",
-        'company_name' => 'List UBO Test Company BV',
+        'legal_name' => 'List UBO Test Company BV',
         'notify_url' => 'https://example.com/notify',
     ];
 

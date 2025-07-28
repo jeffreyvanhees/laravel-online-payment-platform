@@ -15,8 +15,8 @@ it('can create a transaction', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'John',
-        'last_name' => 'Doe',
+        'name_first' => 'John',
+        'name_last' => 'Doe',
         'country' => 'NLD',
         'emailaddress' => "john.doe.transaction.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -41,6 +41,7 @@ it('can create a transaction', function () {
 
     $response = $this->connector->transactions()->create($transactionData);
 
+
     expect($response->successful())->toBeTrue();
     expect($response->json())->toHaveKey('uid');
     expect($response->json('amount'))->toBe(1000);
@@ -51,8 +52,8 @@ it('can create a transaction using DTO', function () {
     $timestamp = time() + 1; // Add 1 to ensure different timestamp
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Jane',
-        'last_name' => 'Doe',
+        'name_first' => 'Jane',
+        'name_last' => 'Doe',
         'country' => 'NLD',
         'emailaddress' => "jane.doe.transaction.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -93,8 +94,8 @@ it('can retrieve a transaction', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Retrieve',
-        'last_name' => 'Transaction',
+        'name_first' => 'Retrieve',
+        'name_last' => 'Transaction',
         'country' => 'NLD',
         'emailaddress' => "retrieve.transaction.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -141,8 +142,8 @@ it('can update a transaction', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Update',
-        'last_name' => 'Transaction',
+        'name_first' => 'Update',
+        'name_last' => 'Transaction',
         'country' => 'NLD',
         'emailaddress' => "update.transaction.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -182,8 +183,8 @@ it('can delete a transaction', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Delete',
-        'last_name' => 'Transaction',
+        'name_first' => 'Delete',
+        'name_last' => 'Transaction',
         'country' => 'NLD',
         'emailaddress' => "delete.transaction.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',

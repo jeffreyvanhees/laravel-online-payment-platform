@@ -13,8 +13,8 @@ it('can create a mandate', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Mandate',
-        'last_name' => 'Test',
+        'name_first' => 'Mandate',
+        'name_last' => 'Test',
         'country' => 'NLD',
         'emailaddress' => "mandate.test.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -52,8 +52,8 @@ it('can retrieve a mandate', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Retrieve',
-        'last_name' => 'Mandate',
+        'name_first' => 'Retrieve',
+        'name_last' => 'Mandate',
         'country' => 'NLD',
         'emailaddress' => "retrieve.mandate.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -108,8 +108,8 @@ it('can delete a mandate', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Delete',
-        'last_name' => 'Mandate',
+        'name_first' => 'Delete',
+        'name_last' => 'Mandate',
         'country' => 'NLD',
         'emailaddress' => "delete.mandate.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -148,8 +148,8 @@ it('can create a mandate transaction', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Transaction',
-        'last_name' => 'Mandate',
+        'name_first' => 'Transaction',
+        'name_last' => 'Mandate',
         'country' => 'NLD',
         'emailaddress' => "transaction.mandate.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -176,7 +176,7 @@ it('can create a mandate transaction', function () {
         $mandateUid = $mandateResponse->json('uid');
 
         $transactionData = [
-            'amount' => 2000, // €20.00 in cents
+            'total_price' => 2000, // €20.00 in cents
             'description' => 'Mandate transaction test',
             'notify_url' => 'https://example.com/notify',
         ];

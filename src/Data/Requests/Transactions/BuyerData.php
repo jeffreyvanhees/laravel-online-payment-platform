@@ -10,9 +10,9 @@ class BuyerData extends BaseData
 {
     public function __construct(
         public string $emailaddress,
-        public ?string $first_name = null,
-        public ?string $last_name = null,
-        public ?string $phone_number = null,
+        public ?string $name_first = null,
+        public ?string $name_last = null,
+        public ?string $phone = null,
         public ?string $company_name = null,
         public ?string $coc_nr = null,
         public ?string $vat_nr = null,

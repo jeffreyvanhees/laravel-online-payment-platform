@@ -8,20 +8,20 @@ declare(strict_types=1);
 dataset('charge_scenarios', [
     'minimal balance charge' => [[
         'type' => 'balance',
-        'amount' => 1000,
+        'total_price' => 1000,
         'from_owner_uid' => 'mer_123',
         'to_owner_uid' => 'mer_456',
     ]],
     'charge with description' => [[
         'type' => 'balance',
-        'amount' => 2500,
+        'total_price' => 2500,
         'from_owner_uid' => 'mer_789',
         'to_owner_uid' => 'mer_012',
         'description' => 'Monthly service fee',
     ]],
     'charge with metadata' => [[
         'type' => 'balance',
-        'amount' => 5000,
+        'total_price' => 5000,
         'from_owner_uid' => 'mer_345',
         'to_owner_uid' => 'mer_678',
         'description' => 'Platform commission',

@@ -32,7 +32,7 @@ describe('OnlinePaymentPlatformResponseHandler', function () {
     test('it throws ValidationException for 422 status with errors', function () {
         $errors = [
             'email' => ['The email field is required.'],
-            'amount' => ['The amount must be greater than 0.'],
+            'total_price' => ['The amount must be greater than 0.'],
         ];
 
         $response = Mockery::mock(Response::class);

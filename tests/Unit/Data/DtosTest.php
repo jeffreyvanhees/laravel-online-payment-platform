@@ -207,8 +207,8 @@ describe('DTOs', function () {
                 'currency' => 'EUR',
                 'date' => '2024-01-15',
                 'transactions' => [
-                    ['uid' => 'tra_1', 'amount' => 5000],
-                    ['uid' => 'tra_2', 'amount' => 5000],
+                    ['uid' => 'tra_1', 'total_price' => 5000],
+                    ['uid' => 'tra_2', 'total_price' => 5000],
                 ],
             ];
 
@@ -248,7 +248,7 @@ describe('DTOs', function () {
                 'type' => 'business',
                 'status' => 'active',
                 'country' => 'NLD',
-                'company_name' => 'Test Company',
+                'legal_name' => 'Test Company B.V.',
             ];
 
             $dto = MerchantData::from($data);
@@ -257,7 +257,7 @@ describe('DTOs', function () {
 
             expect($decoded['uid'])->toBe('mer_123');
             expect($decoded['type'])->toBe('business');
-            expect($decoded['company_name'])->toBe('Test Company');
+            expect($decoded['legal_name'])->toBe('Test Company B.V.');
         });
 
         // Test DTO validation with required fields

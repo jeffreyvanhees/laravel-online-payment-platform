@@ -13,8 +13,8 @@ it('can create a profile for a merchant', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Profile',
-        'last_name' => 'Test',
+        'name_first' => 'Profile',
+        'name_last' => 'Test',
         'country' => 'NLD',
         'emailaddress' => "profile.test.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -55,8 +55,8 @@ it('can retrieve a profile', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Retrieve',
-        'last_name' => 'Profile',
+        'name_first' => 'Retrieve',
+        'name_last' => 'Profile',
         'country' => 'NLD',
         'emailaddress' => "retrieve.profile.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -100,8 +100,8 @@ it('can list profiles for a merchant', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'List',
-        'last_name' => 'Profile',
+        'name_first' => 'List',
+        'name_last' => 'Profile',
         'country' => 'NLD',
         'emailaddress' => "list.profile.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',

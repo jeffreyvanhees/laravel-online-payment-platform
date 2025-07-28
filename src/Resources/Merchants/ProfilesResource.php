@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants;
 
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\CreateMerchantProfileRequest;
+use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\GetMerchantProfileBalanceRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\GetMerchantProfileRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\GetMerchantProfilesRequest;
 use Saloon\Http\BaseResource;
@@ -66,5 +67,20 @@ class ProfilesResource extends BaseResource
     public function list(array $params = []): Response
     {
         return $this->connector->send(new GetMerchantProfilesRequest($this->merchantUid, $params));
+    }
+
+    /**
+     * Get balance for a specific merchant profile
+     *
+     * @param  string  $profileUid  The unique identifier of the profile
+     * @param  array  $params  Optional query parameters for filtering
+     * @return Response API response containing the profile balance data
+     *
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When profile is not found or other API errors
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
+     */
+    public function balance(string $profileUid, array $params = []): Response
+    {
+        return $this->connector->send(new GetMerchantProfileBalanceRequest($this->merchantUid, $profileUid, $params));
     }
 }

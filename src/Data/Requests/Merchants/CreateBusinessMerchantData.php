@@ -21,7 +21,7 @@ class CreateBusinessMerchantData extends BaseData
         public ?array $trading_names = null,
         public ?string $return_url = null,
         public ?string $notify_url = null,
-        public ?string $phone_number = null,
+        public ?string $phone = null,
         public ?string $language = null,
         public ?string $reference = null,
         #[DataCollectionOf(AddressData::class)]

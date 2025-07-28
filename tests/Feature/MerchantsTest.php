@@ -16,8 +16,8 @@ it('can create a merchant', function () {
         'type' => 'consumer',
         'country' => 'NLD',
         'emailaddress' => $randomEmail,
-        'first_name' => 'John',
-        'last_name' => 'Doe',
+        'name_first' => 'John',
+        'name_last' => 'Doe',
         'notify_url' => 'https://example.com/webhook',
     ];
 
@@ -36,8 +36,8 @@ it('can create a merchant using DTO', function () {
         type: 'consumer',
         country: 'NLD',
         emailaddress: $randomEmail,
-        first_name: 'Jane',
-        last_name: 'Smith',
+        name_first: 'Jane',
+        name_last: 'Smith',
         notify_url: 'https://example.com/webhook'
     );
 
@@ -60,8 +60,8 @@ it('can retrieve a merchant', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Retrieve',
-        'last_name' => 'Test',
+        'name_first' => 'Retrieve',
+        'name_last' => 'Test',
         'country' => 'NLD',
         'emailaddress' => "retrieve.test.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -91,8 +91,8 @@ it('can add a contact to a merchant', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Contact',
-        'last_name' => 'Test',
+        'name_first' => 'Contact',
+        'name_last' => 'Test',
         'country' => 'NLD',
         'emailaddress' => "contact.test.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -134,8 +134,8 @@ it('can add an address to a merchant', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Address',
-        'last_name' => 'Test',
+        'name_first' => 'Address',
+        'name_last' => 'Test',
         'country' => 'NLD',
         'emailaddress' => "address.test.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -164,8 +164,8 @@ it('can add a bank account to a merchant', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Bank',
-        'last_name' => 'Test',
+        'name_first' => 'Bank',
+        'name_last' => 'Test',
         'country' => 'NLD',
         'emailaddress' => "bank.test.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -200,8 +200,8 @@ it('can get merchant settlements', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Settlement',
-        'last_name' => 'Test',
+        'name_first' => 'Settlement',
+        'name_last' => 'Test',
         'country' => 'NLD',
         'emailaddress' => "settlement.test.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -222,8 +222,8 @@ it('can update merchant status', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Status',
-        'last_name' => 'Test',
+        'name_first' => 'Status',
+        'name_last' => 'Test',
         'country' => 'NLD',
         'emailaddress' => "status.test.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -249,7 +249,7 @@ it('can create a business merchant', function () {
         'type' => 'business',
         'country' => 'NLD',
         'emailaddress' => "business.test.{$timestamp}@example.com",
-        'company_name' => 'Test Business BV',
+        'legal_name' => 'Test Business BV',
         'notify_url' => 'https://example.com/webhook',
     ];
 
@@ -259,7 +259,7 @@ it('can create a business merchant', function () {
     if ($response->successful()) {
         expect($response->json())->toHaveKey('uid');
         expect($response->json('type'))->toBe('business');
-        expect($response->json('company_name'))->toBe('Test Business BV');
+        expect($response->json('legal_name'))->toBe('Test Business BV');
     } else {
         expect($response->status())->toBeGreaterThanOrEqual(200);
         expect(true)->toBeTrue();

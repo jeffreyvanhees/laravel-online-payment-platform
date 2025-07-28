@@ -53,7 +53,7 @@ describe('Charges Request Patterns Example', function () {
 
         expect($dto)->toBeInstanceOf(ChargeData::class);
         expect($dto->uid)->toBe('cha_created_123');
-        expect($dto->amount)->toBe($expectedBody['amount']);
+        expect($dto->amount)->toBe($expectedBody['amount'] ?? $expectedBody['total_price']);
     })->with([
         'array input' => [[
             'type' => 'balance',

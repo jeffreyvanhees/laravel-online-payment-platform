@@ -86,14 +86,22 @@ class OnlinePaymentPlatformConnector extends Connector implements HasBody, HasPa
     {
         $body = [];
 
-        // Add notify_url if configured
-        if (config('opp.urls.notify')) {
-            $body['notify_url'] = $this->getNotifyUrl();
+        // Add notify_url if configured (only in Laravel environment)
+        try {
+            if (function_exists('config') && config('opp.urls.notify')) {
+                $body['notify_url'] = $this->getNotifyUrl();
+            }
+        } catch (\Exception $e) {
+            // Ignore config errors in non-Laravel environments
         }
 
-        // Add return_url if configured
-        if (config('opp.urls.return')) {
-            $body['return_url'] = $this->getReturnUrl();
+        // Add return_url if configured (only in Laravel environment)
+        try {
+            if (function_exists('config') && config('opp.urls.return')) {
+                $body['return_url'] = $this->getReturnUrl();
+            }
+        } catch (\Exception $e) {
+            // Ignore config errors in non-Laravel environments
         }
 
         return $body;
@@ -235,7 +243,11 @@ class OnlinePaymentPlatformConnector extends Connector implements HasBody, HasPa
      */
     public function getNotifyUrl(): ?string
     {
-        return config('opp.urls.notify');
+        try {
+            return function_exists('config') ? config('opp.urls.notify') : null;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     /**
@@ -245,6 +257,10 @@ class OnlinePaymentPlatformConnector extends Connector implements HasBody, HasPa
      */
     public function getReturnUrl(): ?string
     {
-        return config('opp.urls.return');
+        try {
+            return function_exists('config') ? config('opp.urls.return') : null;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }

@@ -13,8 +13,8 @@ it('can create a charge', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Charge',
-        'last_name' => 'Test',
+        'name_first' => 'Charge',
+        'name_last' => 'Test',
         'country' => 'NLD',
         'emailaddress' => "charge.test.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -25,7 +25,7 @@ it('can create a charge', function () {
 
     $chargeData = [
         'type' => 'balance',
-        'amount' => 1000, // €10.00 in cents
+        'total_price' => 1000, // €10.00 in cents
         'from_owner_uid' => $merchantUid,
         'to_owner_uid' => $merchantUid, // Using same merchant for simplicity
         'description' => 'Test charge',
@@ -36,7 +36,7 @@ it('can create a charge', function () {
     // Test endpoint accessibility - some endpoints may not be available in sandbox
     if ($response->successful()) {
         expect($response->json())->toHaveKey('uid');
-        expect($response->json('amount'))->toBe(1000);
+        expect($response->json('total_price'))->toBe(1000);
         expect($response->json('type'))->toBe('balance');
     } else {
         // At minimum, verify the request structure is correct
@@ -51,8 +51,8 @@ it('can retrieve a charge', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Retrieve',
-        'last_name' => 'Charge',
+        'name_first' => 'Retrieve',
+        'name_last' => 'Charge',
         'country' => 'NLD',
         'emailaddress' => "retrieve.charge.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -63,7 +63,7 @@ it('can retrieve a charge', function () {
 
     $chargeData = [
         'type' => 'balance',
-        'amount' => 1500,
+        'total_price' => 1500,
         'from_owner_uid' => $merchantUid,
         'to_owner_uid' => $merchantUid,
         'description' => 'Retrieve test charge',
@@ -81,7 +81,7 @@ it('can retrieve a charge', function () {
         expect($response->successful())->toBeTrue();
         expect($response->json())->toHaveKey('uid');
         expect($response->json('uid'))->toBe($chargeUid);
-        expect($response->json('amount'))->toBe(1500);
+        expect($response->json('total_price'))->toBe(1500);
     } else {
         // Test structure is correct even if creation fails in sandbox
         expect(true)->toBeTrue();

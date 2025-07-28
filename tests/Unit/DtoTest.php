@@ -15,15 +15,15 @@ it('can create a consumer merchant DTO', function () {
         type: 'consumer',
         country: 'NL',
         emailaddress: 'test@example.com',
-        first_name: 'John',
-        last_name: 'Doe',
+        name_first: 'John',
+        name_last: 'Doe',
     );
 
     expect($dto->type)->toBe('consumer');
     expect($dto->country)->toBe('NL');
     expect($dto->emailaddress)->toBe('test@example.com');
-    expect($dto->first_name)->toBe('John');
-    expect($dto->last_name)->toBe('Doe');
+    expect($dto->name_first)->toBe('John');
+    expect($dto->name_last)->toBe('Doe');
 
     $array = $dto->toArray();
     expect($array)->toHaveKey('type');
@@ -75,8 +75,8 @@ it('can create merchant response DTO from array', function () {
         'status' => 'active',
         'country' => 'NL',
         'emailaddress' => 'test@example.com',
-        'first_name' => 'John',
-        'last_name' => 'Doe',
+        'name_first' => 'John',
+        'name_last' => 'Doe',
     ];
 
     $dto = MerchantData::from($data);

@@ -48,7 +48,7 @@ describe('Mandates Requests', function () {
         test('it has correct method and endpoint', function () {
             $mandateUid = 'man_123456789';
             $data = [
-                'amount' => 2500,
+                'total_price' => 2500,
                 'currency' => 'EUR',
                 'description' => 'Monthly payment',
             ];
@@ -60,7 +60,7 @@ describe('Mandates Requests', function () {
 
         test('it includes mandate UID in endpoint', function () {
             $mandateUid = 'man_987654321';
-            $data = ['amount' => 1000, 'currency' => 'EUR'];
+            $data = ['total_price' => 1000, 'currency' => 'EUR'];
             $request = new CreateMandateTransactionRequest($mandateUid, $data);
 
             expect($request->resolveEndpoint())->toBe("/mandates/{$mandateUid}/transactions");
@@ -68,7 +68,7 @@ describe('Mandates Requests', function () {
 
         test('it accepts transaction data', function () {
             $data = [
-                'amount' => 5000,
+                'total_price' => 5000,
                 'currency' => 'EUR',
                 'description' => 'Annual subscription',
                 'metadata' => ['payment_cycle' => 'annual'],
@@ -77,7 +77,7 @@ describe('Mandates Requests', function () {
             $request = new CreateMandateTransactionRequest('man_123', $data);
 
             $body = $request->body()->all();
-            expect($body['amount'])->toBe(5000);
+            expect($body['total_price'])->toBe(5000);
             expect($body['currency'])->toBe('EUR');
             expect($body['description'])->toBe('Annual subscription');
             expect($body['metadata'])->toBe(['payment_cycle' => 'annual']);

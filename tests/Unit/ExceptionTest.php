@@ -39,7 +39,7 @@ describe('Exception Classes', function () {
     test('it can create ValidationException with invalidData factory', function () {
         $validationErrors = [
             'email' => ['The email field is required.'],
-            'amount' => ['The amount must be greater than 0.'],
+            'total_price' => ['The amount must be greater than 0.'],
         ];
         $exception = ValidationException::invalidData($validationErrors);
 

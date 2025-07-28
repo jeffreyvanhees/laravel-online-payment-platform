@@ -9,10 +9,14 @@ use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateConsumerM
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\CreateMerchantRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\GetMerchantRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\GetMerchantsRequest;
+use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\MigrateMerchantRequest;
+use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\UpdateMerchantRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\UpdateMerchantStatusRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\AddressesResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\BankAccountsResource;
+use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\ChargesResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\ContactsResource;
+use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\PaymentMethodsResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\ProfilesResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\SettlementsResource;
 use JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants\UBOsResource;
@@ -134,6 +138,60 @@ class MerchantsResource extends BaseResource
     public function profiles(string $merchantUid): ProfilesResource
     {
         return new ProfilesResource($this->connector, $merchantUid);
+    }
+
+    /**
+     * Access charges subresource for a specific merchant
+     *
+     * @param  string  $merchantUid  The unique identifier of the merchant
+     * @return ChargesResource Charges subresource instance for merchant-specific charges
+     */
+    public function charges(string $merchantUid): ChargesResource
+    {
+        return new ChargesResource($this->connector, $merchantUid);
+    }
+
+    /**
+     * Access payment methods subresource for a specific merchant
+     *
+     * @param  string  $merchantUid  The unique identifier of the merchant
+     * @return PaymentMethodsResource Payment methods subresource instance
+     */
+    public function paymentMethods(string $merchantUid): PaymentMethodsResource
+    {
+        return new PaymentMethodsResource($this->connector, $merchantUid);
+    }
+
+    /**
+     * Update merchant information
+     *
+     * @param  string  $merchantUid  The unique identifier of the merchant
+     * @param  array  $updateData  Update data (e.g., emailaddress, notify_url, return_url)
+     * @return Response API response containing the updated merchant data
+     *
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When update data is invalid
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When merchant is not found or other API errors
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
+     */
+    public function update(string $merchantUid, array $updateData): Response
+    {
+        return $this->connector->send(new UpdateMerchantRequest($merchantUid, $updateData));
+    }
+
+    /**
+     * Migrate merchant from consumer to business
+     *
+     * @param  string  $merchantUid  The unique identifier of the merchant
+     * @param  array  $migrationData  Migration data for converting to business merchant
+     * @return Response API response containing the migrated merchant data
+     *
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When migration data is invalid
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When merchant cannot be migrated or other API errors
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
+     */
+    public function migrate(string $merchantUid, array $migrationData): Response
+    {
+        return $this->connector->send(new MigrateMerchantRequest($merchantUid, $migrationData));
     }
 
     /**

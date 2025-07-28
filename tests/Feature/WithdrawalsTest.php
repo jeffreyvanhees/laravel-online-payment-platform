@@ -13,8 +13,8 @@ it('can create a withdrawal', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Withdrawal',
-        'last_name' => 'Test',
+        'name_first' => 'Withdrawal',
+        'name_last' => 'Test',
         'country' => 'NLD',
         'emailaddress' => "withdrawal.test.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -24,7 +24,7 @@ it('can create a withdrawal', function () {
     $merchantUid = $merchantResponse->json('uid');
 
     $withdrawalData = [
-        'amount' => 5000, // €50.00 in cents
+        'total_price' => 5000, // €50.00 in cents
         'reference' => 'withdrawal-test-'.time(),
         'description' => 'Test withdrawal',
         'notify_url' => 'https://example.com/notify',
@@ -35,7 +35,7 @@ it('can create a withdrawal', function () {
     // Test endpoint accessibility - some endpoints may not be available in sandbox
     if ($response->successful()) {
         expect($response->json())->toHaveKey('uid');
-        expect($response->json('amount'))->toBe(5000);
+        expect($response->json('total_price'))->toBe(5000);
         expect($response->json('description'))->toBe('Test withdrawal');
     } else {
         // At minimum verify we're getting a proper HTTP response
@@ -49,8 +49,8 @@ it('can retrieve a withdrawal', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Retrieve',
-        'last_name' => 'Withdrawal',
+        'name_first' => 'Retrieve',
+        'name_last' => 'Withdrawal',
         'country' => 'NLD',
         'emailaddress' => "retrieve.withdrawal.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -60,7 +60,7 @@ it('can retrieve a withdrawal', function () {
     $merchantUid = $merchantResponse->json('uid');
 
     $withdrawalData = [
-        'amount' => 3000,
+        'total_price' => 3000,
         'reference' => 'withdrawal-retrieve-'.time(),
         'description' => 'Retrieve test withdrawal',
         'notify_url' => 'https://example.com/notify',
@@ -78,7 +78,7 @@ it('can retrieve a withdrawal', function () {
         expect($response->successful())->toBeTrue();
         expect($response->json())->toHaveKey('uid');
         expect($response->json('uid'))->toBe($withdrawalUid);
-        expect($response->json('amount'))->toBe(3000);
+        expect($response->json('total_price'))->toBe(3000);
     } else {
         // Test structure is correct even if creation fails in sandbox
         expect(true)->toBeTrue();
@@ -104,8 +104,8 @@ it('can delete a withdrawal', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Delete',
-        'last_name' => 'Withdrawal',
+        'name_first' => 'Delete',
+        'name_last' => 'Withdrawal',
         'country' => 'NLD',
         'emailaddress' => "delete.withdrawal.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -115,7 +115,7 @@ it('can delete a withdrawal', function () {
     $merchantUid = $merchantResponse->json('uid');
 
     $withdrawalData = [
-        'amount' => 1000,
+        'total_price' => 1000,
         'reference' => 'withdrawal-delete-'.time(),
         'description' => 'Delete test withdrawal',
         'notify_url' => 'https://example.com/notify',

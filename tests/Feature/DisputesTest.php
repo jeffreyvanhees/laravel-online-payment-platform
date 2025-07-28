@@ -13,8 +13,8 @@ it('can create a dispute', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Dispute',
-        'last_name' => 'Test',
+        'name_first' => 'Dispute',
+        'name_last' => 'Test',
         'country' => 'NLD',
         'emailaddress' => "dispute.test.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -45,7 +45,7 @@ it('can create a dispute', function () {
         'transaction_uid' => $transactionUid,
         'reason' => 'product_not_received',
         'description' => 'Customer claims they never received the product',
-        'amount' => 2500,
+        'total_price' => 2500,
         'notify_url' => 'https://example.com/notify',
     ];
 
@@ -54,7 +54,7 @@ it('can create a dispute', function () {
     // Dispute creation may require additional setup in sandbox
     if ($response->successful()) {
         expect($response->json())->toHaveKey('uid');
-        expect($response->json('amount'))->toBe(2500);
+        expect($response->json('total_price'))->toBe(2500);
         expect($response->json('reason'))->toBe('product_not_received');
     } else {
         expect($response->status())->toBeGreaterThanOrEqual(200);
@@ -67,8 +67,8 @@ it('can retrieve a dispute', function () {
     $timestamp = time();
     $merchantData = [
         'type' => 'consumer',
-        'first_name' => 'Retrieve',
-        'last_name' => 'Dispute',
+        'name_first' => 'Retrieve',
+        'name_last' => 'Dispute',
         'country' => 'NLD',
         'emailaddress' => "retrieve.dispute.{$timestamp}@example.com",
         'notify_url' => 'https://example.com/notify',
@@ -98,7 +98,7 @@ it('can retrieve a dispute', function () {
         'transaction_uid' => $transactionUid,
         'reason' => 'product_damaged',
         'description' => 'Product was damaged upon arrival',
-        'amount' => 1800,
+        'total_price' => 1800,
         'notify_url' => 'https://example.com/notify',
     ];
 
@@ -114,7 +114,7 @@ it('can retrieve a dispute', function () {
         expect($response->successful())->toBeTrue();
         expect($response->json())->toHaveKey('uid');
         expect($response->json('uid'))->toBe($disputeUid);
-        expect($response->json('amount'))->toBe(1800);
+        expect($response->json('total_price'))->toBe(1800);
     } else {
         expect(true)->toBeTrue();
     }

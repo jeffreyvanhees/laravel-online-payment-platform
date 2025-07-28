@@ -167,14 +167,19 @@ $merchant = $merchantResponse->dto();
 // Create transaction with products
 $transactionData = new CreateTransactionData(
     merchant_uid: $merchant->uid,
-    total_price: 2500, // €25.00 in cents
+    total_price: 2850, // €28.50 in cents
     return_url: 'https://yoursite.com/payment/return',
     notify_url: 'https://yoursite.com/webhooks/opp',
     products: ProductData::collect([
         [
-            'name' => 'Premium Subscription',
+            'name' => 'Big Tasty',
             'quantity' => 1,
             'price' => 2500,
+        ],
+        [
+            'name' => 'Milkshake Strawberry',
+            'quantity' => 1,
+            'price' => 350,
         ],
     ])
 );
@@ -266,6 +271,26 @@ $profile = OnlinePaymentPlatform::merchants()->profiles('mer_123456789')->create
     'return_url' => 'https://store.example.com/success',
     'is_default' => false,
 ]);
+
+// Update merchant information
+$updated = OnlinePaymentPlatform::merchants()->update('mer_123456789', [
+    'emailaddress' => 'newemail@example.com',
+    'notify_url' => 'https://newdomain.com/webhook',
+    'return_url' => 'https://newdomain.com/return',
+]);
+
+// Migrate consumer merchant to business merchant
+$migrated = OnlinePaymentPlatform::merchants()->migrate('mer_123456789', [
+    'type' => 'business',
+    'legal_name' => 'Example Business B.V.',
+    'coc_nr' => '12345678',
+]);
+
+// Get available payment methods for merchant
+$paymentMethods = OnlinePaymentPlatform::merchants()->paymentMethods('mer_123456789')->list();
+
+// Get merchant profile balance
+$balance = OnlinePaymentPlatform::merchants()->profiles('mer_123456789')->balance('pro_987654321');
 ```
 
 ### Transactions
@@ -390,8 +415,8 @@ $mandate = OnlinePaymentPlatform::mandates()->create([
     'holder_name' => 'John Doe',
     'iban' => 'NL91ABNA0417164300',
     'bic' => 'ABNANL2A',
-    'description' => 'Monthly subscription mandate',
-    'reference' => 'SUBSCRIPTION-2024',
+    'description' => 'Monthly meal plan mandate',
+    'reference' => 'MEALPLAN-2024',
 ]);
 
 // Retrieve mandate
@@ -400,7 +425,7 @@ $mandate = OnlinePaymentPlatform::mandates()->get('man_123456789');
 // Create transaction using mandate
 $transaction = OnlinePaymentPlatform::mandates()->transactions('man_123456789')->create([
     'amount' => 2500, // €25.00 in cents
-    'description' => 'Monthly subscription payment',
+    'description' => 'Monthly meal plan payment',
 ]);
 
 // Delete mandate
@@ -490,15 +515,13 @@ $files = OnlinePaymentPlatform::files()->list([
 // Get partner configuration
 $config = OnlinePaymentPlatform::partners()->getConfiguration();
 
-// Update partner settings
+// Update partner settings (only notify_url is updatable)
 $updated = OnlinePaymentPlatform::partners()->updateConfiguration([
-    'webhook_url' => 'https://partner.example.com/webhooks',
-    'notification_email' => 'notifications@partner.com',
-    'settings' => [
-        'auto_approve_merchants' => false,
-        'require_vat_number' => true,
-    ],
+    'notify_url' => 'https://partner.example.com/webhooks',
 ]);
+
+// Get merchant balance via partner
+$merchantBalance = OnlinePaymentPlatform::partners()->getMerchantBalance('mer_123456789');
 ```
 
 ### Pagination

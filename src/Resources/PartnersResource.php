@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace JeffreyVanHees\OnlinePaymentPlatform\Resources;
 
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Partners\GetConfigurationRequest;
+use JeffreyVanHees\OnlinePaymentPlatform\Requests\Partners\GetPartnerMerchantBalanceRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Partners\UpdateConfigurationRequest;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
@@ -43,5 +44,20 @@ class PartnersResource extends BaseResource
     public function updateConfiguration(array $data): Response
     {
         return $this->connector->send(new UpdateConfigurationRequest($data));
+    }
+
+    /**
+     * Get balance for a specific merchant under partner
+     *
+     * @param  string  $merchantUid  The unique identifier of the merchant
+     * @param  array  $params  Optional query parameters for filtering
+     * @return Response API response containing the merchant balance data
+     *
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When merchant is not found or other API errors
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
+     */
+    public function getMerchantBalance(string $merchantUid, array $params = []): Response
+    {
+        return $this->connector->send(new GetPartnerMerchantBalanceRequest($merchantUid, $params));
     }
 }

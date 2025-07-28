@@ -9,11 +9,10 @@ use JeffreyVanHees\OnlinePaymentPlatform\Data\BaseData;
 class SettlementRowData extends BaseData
 {
     public function __construct(
-        public string $type, // 'transaction', 'refund', 'chargeback', 'mandate'
-        public string $reference, // UID of related object
-        public int $total_partner_fee,
-        public int $amount, // gross amount
-        public int $amount_payable, // net amount after fees
+        public string $type,
+        public string $reference,
+        public int $amount,
+        public ?int $amount_payable = null,
         public ?array $metadata = null,
     ) {}
 }

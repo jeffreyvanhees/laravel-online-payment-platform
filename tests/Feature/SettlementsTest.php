@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Merchants\SettlementData;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Settlements\SettlementData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Settlements\SettlementRowData;
 use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformConnector;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Settlements\GetSettlementsRequest;
@@ -64,6 +64,9 @@ it('can list all settlements', function () {
             ],
             'has_more' => false,
             'total_item_count' => 2,
+            'items_per_page' => 10,
+            'current_page' => 1,
+            'last_page' => 1,
         ], 200),
     ]);
 
@@ -115,6 +118,9 @@ it('can get settlement specification rows', function () {
             ],
             'has_more' => false,
             'total_item_count' => 3,
+            'items_per_page' => 10,
+            'current_page' => 1,
+            'last_page' => 1,
         ], 200),
     ]);
 
@@ -160,6 +166,9 @@ it('can filter settlements by status', function () {
             ],
             'has_more' => false,
             'total_item_count' => 1,
+            'items_per_page' => 10,
+            'current_page' => 1,
+            'last_page' => 1,
         ], 200),
     ]);
 

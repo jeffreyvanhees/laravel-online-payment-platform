@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JeffreyVanHees\OnlinePaymentPlatform\Requests\Settlements;
 
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\PaginatedListResponse;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Settlements\SettlementRowsResponse;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Settlements\SettlementRowData;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -30,13 +30,16 @@ class GetSettlementSpecificationRowsRequest extends Request
         return $this->params;
     }
 
-    public function createDtoFromResponse(Response $response): PaginatedListResponse
+    public function createDtoFromResponse(Response $response): SettlementRowsResponse
     {
         $responseData = $response->json();
         
-        return new PaginatedListResponse(
-            data: collect($responseData['data'] ?? [])->map(fn($row) => SettlementRowData::from($row))->toArray(),
-            pagination: $responseData
-        );
+        return SettlementRowsResponse::from([
+            ...$responseData,
+            'data' => array_map(
+                fn ($item) => SettlementRowData::from($item),
+                $responseData['data'] ?? []
+            ),
+        ]);
     }
 }

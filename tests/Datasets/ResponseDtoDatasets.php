@@ -365,6 +365,48 @@ dataset('merchant_data_scenarios', [
             'legal_name' => 'Suspended Company B.V.',
         ],
     ]],
+    'merchant with compliance' => [[
+        'data' => [
+            'uid' => 'mer_compliance_123',
+            'type' => 'individual',
+            'status' => 'unverified',
+            'country' => 'NLD',
+            'name' => 'Test Individual',
+            'compliance' => [
+                'level' => 400,
+                'status' => 'unverified',
+                'overview_url' => 'https://sandbox.onlinebetaalplatform.nl/en/testindividual/mer_compliance_123/15c0bdb17283475ec5f274cad0a2a0245dda11ff/overview',
+                'requirements' => [
+                    [
+                        'created' => 1528805391,
+                        'updated' => 1531485171,
+                        'type' => 'contact.verification.required',
+                        'status' => 'unverified',
+                        'object_type' => 'contact',
+                        'object_uid' => 'con_123456789',
+                        'object_url' => 'https://api-sandbox.onlinebetaalplatform.nl/v1/merchants/mer_compliance_123/contacts/con_123456789',
+                        'object_redirect_url' => 'https://sandbox.onlinebetaalplatform.nl/nl/testindividual/merchants/mer_compliance_123/verificatie/contactgegevens/con_123456789/e23405b8d2fc98d6fef9a5999dde0a0a7db26f6a',
+                    ],
+                    [
+                        'created' => 1528805391,
+                        'updated' => 1531485171,
+                        'type' => 'bank_account.verification.required',
+                        'status' => 'unverified',
+                        'object_type' => 'bank_account',
+                        'object_uid' => 'ban_123456789',
+                        'object_url' => 'https://api-sandbox.onlinebetaalplatform.nl/v1/merchants/mer_compliance_123/bank_accounts/ban_123456789',
+                        'object_redirect_url' => 'https://sandbox.onlinebetaalplatform.nl/nl/testindividual/merchants/mer_compliance_123/verificatie/bankgegevens/ban_123456789/fc0b7c490a5021069ae04b50a1a2ee4b2be1b691',
+                    ],
+                ],
+            ],
+        ],
+        'assertions' => [
+            'uid' => 'mer_compliance_123',
+            'type' => 'individual',
+            'status' => 'unverified',
+            'name' => 'Test Individual',
+        ],
+    ]],
 ]);
 
 dataset('common_dto_scenarios', [
@@ -420,6 +462,52 @@ dataset('common_dto_scenarios', [
             'return_url' => 'https://example.com/bank-return',
             'iban' => 'NL91ABNA0417164300',
             'holder_name' => 'John Doe',
+        ],
+    ]],
+    'compliance_requirement' => [[
+        'class' => 'JeffreyVanHees\OnlinePaymentPlatform\Data\Common\ComplianceRequirementData',
+        'data' => [
+            'created' => 1528805391,
+            'updated' => 1531485171,
+            'type' => 'contact.verification.required',
+            'status' => 'unverified',
+            'object_type' => 'contact',
+            'object_uid' => 'con_123456789',
+            'object_url' => 'https://api-sandbox.onlinebetaalplatform.nl/v1/merchants/mer_123/contacts/con_123456789',
+            'object_redirect_url' => 'https://sandbox.onlinebetaalplatform.nl/nl/testindividual/merchants/mer_123/verificatie/contactgegevens/con_123456789/e23405b8d2fc98d6fef9a5999dde0a0a7db26f6a',
+        ],
+        'assertions' => [
+            'created' => 1528805391,
+            'updated' => 1531485171,
+            'type' => 'contact.verification.required',
+            'status' => 'unverified',
+            'object_type' => 'contact',
+            'object_uid' => 'con_123456789',
+        ],
+    ]],
+    'compliance' => [[
+        'class' => 'JeffreyVanHees\OnlinePaymentPlatform\Data\Common\ComplianceData',
+        'data' => [
+            'level' => 400,
+            'status' => 'unverified',
+            'overview_url' => 'https://sandbox.onlinebetaalplatform.nl/en/testindividual/mer_123/15c0bdb17283475ec5f274cad0a2a0245dda11ff/overview',
+            'requirements' => [
+                [
+                    'created' => 1528805391,
+                    'updated' => 1531485171,
+                    'type' => 'contact.verification.required',
+                    'status' => 'unverified',
+                    'object_type' => 'contact',
+                    'object_uid' => 'con_123456789',
+                    'object_url' => 'https://api-sandbox.onlinebetaalplatform.nl/v1/merchants/mer_123/contacts/con_123456789',
+                    'object_redirect_url' => 'https://sandbox.onlinebetaalplatform.nl/nl/testindividual/merchants/mer_123/verificatie/contactgegevens/con_123456789/e23405b8d2fc98d6fef9a5999dde0a0a7db26f6a',
+                ],
+            ],
+        ],
+        'assertions' => [
+            'level' => 400,
+            'status' => 'unverified',
+            'overview_url' => 'https://sandbox.onlinebetaalplatform.nl/en/testindividual/mer_123/15c0bdb17283475ec5f274cad0a2a0245dda11ff/overview',
         ],
     ]],
 ]);

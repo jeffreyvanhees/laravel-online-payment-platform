@@ -178,6 +178,41 @@ describe('DTOs', function () {
             expect($array)->toHaveKey('type');
             expect($array)->toHaveKey('status');
         })->with('merchant_data_scenarios');
+
+        test('merchant data with compliance', function () {
+            $data = [
+                'uid' => 'mer_compliance_test',
+                'type' => 'individual',
+                'status' => 'unverified',
+                'country' => 'NLD',
+                'compliance' => [
+                    'level' => 400,
+                    'status' => 'unverified',
+                    'overview_url' => 'https://sandbox.onlinebetaalplatform.nl/overview',
+                    'requirements' => [
+                        [
+                            'created' => 1528805391,
+                            'updated' => 1531485171,
+                            'type' => 'contact.verification.required',
+                            'status' => 'unverified',
+                            'object_type' => 'contact',
+                            'object_uid' => 'con_123',
+                            'object_url' => 'https://api.example.com/contacts/con_123',
+                            'object_redirect_url' => 'https://platform.example.com/verify/con_123',
+                        ],
+                    ],
+                ],
+            ];
+
+            $dto = MerchantData::from($data);
+
+            expect($dto)->toBeInstanceOf(MerchantData::class);
+            expect($dto->compliance)->not->toBeNull();
+            expect($dto->compliance->level)->toBe(400);
+            expect($dto->compliance->status)->toBe('unverified');
+            expect($dto->compliance->requirements)->toHaveCount(1);
+            expect($dto->compliance->requirements->first()->type)->toBe('contact.verification.required');
+        });
     });
 
     describe('Common DTOs', function () {

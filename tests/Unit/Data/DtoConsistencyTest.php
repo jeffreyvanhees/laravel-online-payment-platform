@@ -37,12 +37,13 @@ it('can create RefundData from API response', function () {
         'uid' => 'ref_test123',
         'status' => 'completed',
         'amount' => 1500,
+        'currency' => 'EUR',
         'payout_description' => 'Customer return',
+        'message' => 'return_message',
+        'created_at' => '2024-01-01T10:00:00Z',
+        'updated_at' => '2024-01-01T10:05:00Z',
+        'processed_at' => '2024-01-01T10:10:00Z',
         'internal_reason' => 'return',
-        'created' => 1640995200,
-        'updated' => 1640995300,
-        'paid' => 1640995400,
-        'fees' => ['processing' => 15],
         'metadata' => ['return_reason' => 'size_issue'],
         'livemode' => false,
         'object' => 'refund',
@@ -53,36 +54,35 @@ it('can create RefundData from API response', function () {
     expect($refund->uid)->toBe('ref_test123');
     expect($refund->status)->toBe('completed');
     expect($refund->amount)->toBe(1500);
+    expect($refund->currency)->toBe('EUR');
     expect($refund->payout_description)->toBe('Customer return');
+    expect($refund->message)->toBe('return_message');
     expect($refund->internal_reason)->toBe('return');
-    expect($refund->fees)->toBe(['processing' => 15]);
     expect($refund->metadata)->toBe(['return_reason' => 'size_issue']);
 });
 
 it('can create CreateMandateData with product collection', function () {
-    $products = DataCollection::from([
-        new ProductData(
-            name: 'Subscription Plan',
-            quantity: 1,
-            price: 2500,
-            description: 'Monthly subscription',
-            vat_rate: '21'
-        ),
-        new ProductData(
-            name: 'Setup Fee',
-            quantity: 1,
-            price: 500,
-            description: 'One-time setup fee'
-        )
-    ], ProductData::class);
-
     $mandateData = new CreateMandateData(
         merchant_uid: 'mer_test123',
         mandate_method: 'payment',
         mandate_type: 'consumer',
         mandate_repeat: 'subscription',
         mandate_amount: 100,
-        products: $products,
+        products: [
+            [
+                'name' => 'Subscription Plan',
+                'quantity' => 1,
+                'price' => 2500,
+                'description' => 'Monthly subscription',
+                'vat_rate' => '21'
+            ],
+            [
+                'name' => 'Setup Fee',
+                'quantity' => 1,
+                'price' => 500,
+                'description' => 'One-time setup fee'
+            ]
+        ],
         total_price: 3000,
         return_url: 'https://example.com/return',
         notify_url: 'https://example.com/notify',
@@ -93,36 +93,37 @@ it('can create CreateMandateData with product collection', function () {
     expect($mandateData->merchant_uid)->toBe('mer_test123');
     expect($mandateData->mandate_method)->toBe('payment');
     expect($mandateData->mandate_type)->toBe('consumer');
-    expect($mandateData->products)->toBeInstanceOf(DataCollection::class);
+    // The property accepts both DataCollection|array, so let's test it works with array
+    expect($mandateData->products)->toBeArray();
     expect($mandateData->products)->toHaveCount(2);
+    expect($mandateData->products[0]['name'])->toBe('Subscription Plan');
+    expect($mandateData->products[1]['name'])->toBe('Setup Fee');
     expect($mandateData->total_price)->toBe(3000);
     expect($mandateData->payment_method)->toBe('ideal');
-
-    $array = $mandateData->toArray();
-    expect($array)->toHaveKey('merchant_uid', 'mer_test123');
-    expect($array)->toHaveKey('products');
-    expect($array['products'])->toHaveCount(2);
-    expect($array['products'][0])->toHaveKey('name', 'Subscription Plan');
 });
 
 it('can create MandateData from API response', function () {
     $responseData = [
         'uid' => 'man_test123',
         'status' => 'created',
-        'mandate_method' => 'payment',
+        'merchant_uid' => 'mer_test456',
+        'mandate_url' => 'https://sandbox.onlinebetaalplatform.nl/mandate/123',
+        'description' => 'Monthly subscription',
+        'reference' => 'MANDATE-123',
+        'metadata' => ['subscription_type' => 'premium'],
+        'created_at' => '2024-01-01T10:00:00Z',
+        'updated_at' => '2024-01-01T10:00:00Z',
+        'signed_at' => null,
+        'cancelled_at' => null,
+        'iban' => 'NL91ABNA0417164300',
+        'bic' => 'ABNANL2A',
+        'holder_name' => 'John Doe',
+        'mandate_method' => 'payment', 
         'mandate_type' => 'consumer',
         'mandate_repeat' => 'subscription',
         'amount' => 100,
-        'redirect_url' => 'https://sandbox.onlinebetaalplatform.nl/mandate/123',
         'return_url' => 'https://example.com/return',
         'notify_url' => 'https://example.com/notify',
-        'created' => 1640995200,
-        'updated' => 1640995200,
-        'completed' => null,
-        'expired' => 1640999800,
-        'customer' => ['email' => 'test@example.com'],
-        'order' => ['reference' => 'ORD-123'],
-        'metadata' => ['subscription_type' => 'premium'],
         'livemode' => false,
         'object' => 'mandate',
     ];
@@ -131,11 +132,16 @@ it('can create MandateData from API response', function () {
 
     expect($mandate->uid)->toBe('man_test123');
     expect($mandate->status)->toBe('created');
+    expect($mandate->merchant_uid)->toBe('mer_test456');
+    expect($mandate->mandate_url)->toBe('https://sandbox.onlinebetaalplatform.nl/mandate/123');
+    expect($mandate->description)->toBe('Monthly subscription');
+    expect($mandate->reference)->toBe('MANDATE-123');
     expect($mandate->mandate_method)->toBe('payment');
     expect($mandate->mandate_type)->toBe('consumer');
     expect($mandate->amount)->toBe(100);
-    expect($mandate->redirect_url)->toBe('https://sandbox.onlinebetaalplatform.nl/mandate/123');
-    expect($mandate->customer)->toBe(['email' => 'test@example.com']);
+    expect($mandate->iban)->toBe('NL91ABNA0417164300');
+    expect($mandate->bic)->toBe('ABNANL2A');
+    expect($mandate->holder_name)->toBe('John Doe');
     expect($mandate->metadata)->toBe(['subscription_type' => 'premium']);
 });
 

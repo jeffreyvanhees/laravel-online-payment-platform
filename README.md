@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffreyvanhees/laravel-online-payment-platform.svg?style=flat-square)](https://packagist.org/packages/jeffreyvanhees/laravel-online-payment-platform)
 [![Tests](https://img.shields.io/github/actions/workflow/status/jeffreyvanhees/laravel-online-payment-platform/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/run-tests.yml)
-[![Coverage](https://img.shields.io/badge/Coverage-70.2%25-brightgreen?style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/coverage.yml)
+[![Coverage](https://img.shields.io/badge/Coverage-80.0%25-brightgreen?style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/coverage.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/jeffreyvanhees/laravel-online-payment-platform.svg?style=flat-square)](https://packagist.org/packages/jeffreyvanhees/laravel-online-payment-platform)
 
 A modern Laravel package for integrating with the [Online Payment Platform](https://onlinepaymentplatform.com) API. Built with [SaloonPHP](https://docs.saloon.dev) and [Spatie Laravel Data](https://spatie.be/docs/laravel-data) for an excellent developer experience.
@@ -58,6 +58,24 @@ OPP_RETURN_URL=https://yourapp.com/payment/return
 # Webhook Configuration (optional)
 OPP_NOTIFY_SECRET=your_webhook_secret
 ```
+
+## 📚 API Documentation
+
+### 📋 API Endpoints Index
+
+- **[Merchants](#merchants)** - Create consumer/business merchants, manage contacts, addresses, UBOs, and profiles
+- **[Transactions](#transactions)** - Create payments, retrieve status, update transaction details  
+- **[Refunds](#refunds)** - Process transaction refunds and list refund history
+- **[Global Settlements](#global-settlements)** - Platform-wide settlement reporting and detailed rows
+- **[Charges](#charges)** - Balance transfers between merchants and fee management
+- **[Mandates](#mandates)** - SEPA Direct Debit mandates and recurring transactions
+- **[Withdrawals](#withdrawals)** - Merchant payouts to bank accounts
+- **[Disputes](#disputes)** - Handle transaction disputes and chargebacks
+- **[Files](#files)** - Upload and manage documents for verification/evidence
+- **[Partners](#partners)** - Partner configuration and settings management
+- **[Pagination](#pagination)** - Handle paginated API responses
+
+---
 
 ## 🎯 Usage
 
@@ -166,35 +184,6 @@ $transaction = $transactionResponse->dto();
 
 echo "Payment URL: {$transaction->redirect_url}";
 ```
-
-## ✨ Key Benefits
-
-- **🛡️ Type Safety**: Fully typed DTOs prevent runtime errors and provide excellent IDE support
-- **🎭 Facade Integration**: Clean Laravel facade with auto-discovery - no manual setup required
-- **🔧 Flexible Usage**: Use DTOs for type safety or arrays for quick prototyping
-- **⚡ Auto-Pagination**: Automatically handles paginated responses across all pages
-- **🔄 Environment Support**: Seamless sandbox/production switching with configuration
-- **📦 Service Container**: Native Laravel dependency injection support
-- **🧪 Comprehensive Testing**: 70%+ code coverage with production-ready test suite
-- **🚀 SaloonPHP Power**: Built on robust HTTP client with middleware and retry logic
-
-## 📚 API Documentation
-
-### 📋 API Endpoints Index
-
-- **[Merchants](#merchants)** - Create consumer/business merchants, manage contacts, addresses, UBOs, and profiles
-- **[Transactions](#transactions)** - Create payments, retrieve status, update transaction details  
-- **[Refunds](#refunds)** - Process transaction refunds and list refund history
-- **[Global Settlements](#global-settlements)** - Platform-wide settlement reporting and detailed rows
-- **[Charges](#charges)** - Balance transfers between merchants and fee management
-- **[Mandates](#mandates)** - SEPA Direct Debit mandates and recurring transactions
-- **[Withdrawals](#withdrawals)** - Merchant payouts to bank accounts
-- **[Disputes](#disputes)** - Handle transaction disputes and chargebacks
-- **[Files](#files)** - Upload and manage documents for verification/evidence
-- **[Partners](#partners)** - Partner configuration and settings management
-- **[Pagination](#pagination)** - Handle paginated API responses
-
----
 
 ### Merchants
 
@@ -647,10 +636,10 @@ composer replay
 
 ### Test Coverage
 
-The package includes comprehensive tests covering all API endpoints with **70.2% code coverage**:
+The package includes comprehensive tests covering all API endpoints with **80.0% code coverage**:
 
-- ✅ **214 tests** covering all major endpoints and DTOs  
-- ✅ **907 assertions** ensuring functionality  
+- ✅ **240 tests** covering all major endpoints and DTOs  
+- ✅ **1053 assertions** ensuring functionality  
 - ✅ **Merchant operations** - CRUD, contacts, addresses, bank accounts, settlements, UBOs, profiles
 - ✅ **Transaction lifecycle** - create, retrieve, update, delete
 - ✅ **Payment flows** - charges, mandates, withdrawals, disputes

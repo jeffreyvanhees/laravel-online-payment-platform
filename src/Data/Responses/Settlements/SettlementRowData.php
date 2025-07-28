@@ -12,6 +12,7 @@ class SettlementRowData extends BaseData
         public string $type,
         public string $reference,
         public int $amount,
+        public ?int $total_partner_fee = null,
         public ?int $amount_payable = null,
         public ?array $metadata = null,
     ) {}

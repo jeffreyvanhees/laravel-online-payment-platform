@@ -5,8 +5,8 @@ declare(strict_types=1);
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Settlements\SettlementData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Settlements\SettlementRowData;
 use JeffreyVanHees\OnlinePaymentPlatform\OnlinePaymentPlatformConnector;
-use JeffreyVanHees\OnlinePaymentPlatform\Requests\Settlements\GetSettlementsRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Settlements\GetSettlementSpecificationRowsRequest;
+use JeffreyVanHees\OnlinePaymentPlatform\Requests\Settlements\GetSettlementsRequest;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;
 
@@ -60,7 +60,7 @@ it('can list all settlements', function () {
                     'payout_type' => 'collective',
                     'livemode' => false,
                     'object' => 'settlement',
-                ]
+                ],
             ],
             'has_more' => false,
             'total_item_count' => 2,
@@ -114,7 +114,7 @@ it('can get settlement specification rows', function () {
                     'amount' => 2000,
                     'amount_payable' => 1950,
                     'metadata' => ['merchant_uid' => 'mer_test456'],
-                ]
+                ],
             ],
             'has_more' => false,
             'total_item_count' => 3,
@@ -128,7 +128,7 @@ it('can get settlement specification rows', function () {
 
     $settlementUid = 'set_test123';
     $specificationUid = 'spec_test456';
-    
+
     $response = $this->connector->settlements()->specificationRows($settlementUid, $specificationUid);
     $rows = $response->dto();
 
@@ -162,7 +162,7 @@ it('can filter settlements by status', function () {
                     'payout_type' => 'collective',
                     'livemode' => false,
                     'object' => 'settlement',
-                ]
+                ],
             ],
             'has_more' => false,
             'total_item_count' => 1,
@@ -177,7 +177,7 @@ it('can filter settlements by status', function () {
     $response = $this->connector->settlements()->list([
         'filter' => ['status' => 'current'],
         'expand' => ['specifications'],
-        'order' => ['-period']
+        'order' => ['-period'],
     ]);
 
     $settlements = $response->dto();
@@ -185,7 +185,7 @@ it('can filter settlements by status', function () {
     expect($settlements->data[0]->status)->toBe('current');
 
     $mockClient->assertSent(function ($request) {
-        return $request instanceof GetSettlementsRequest 
+        return $request instanceof GetSettlementsRequest
             && $request->query()->get('filter')['status'] === 'current'
             && in_array('specifications', $request->query()->get('expand', []))
             && in_array('-period', $request->query()->get('order', []));

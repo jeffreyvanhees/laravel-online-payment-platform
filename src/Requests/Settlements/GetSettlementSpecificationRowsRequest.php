@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace JeffreyVanHees\OnlinePaymentPlatform\Requests\Settlements;
 
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Settlements\SettlementRowsResponse;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Settlements\SettlementRowData;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Settlements\SettlementRowsResponse;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -33,7 +33,7 @@ class GetSettlementSpecificationRowsRequest extends Request
     public function createDtoFromResponse(Response $response): SettlementRowsResponse
     {
         $responseData = $response->json();
-        
+
         return SettlementRowsResponse::from([
             ...$responseData,
             'data' => array_map(

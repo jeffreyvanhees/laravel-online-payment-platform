@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace JeffreyVanHees\OnlinePaymentPlatform\Resources;
 
-use JeffreyVanHees\OnlinePaymentPlatform\Requests\Settlements\GetSettlementsRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Settlements\GetSettlementSpecificationRowsRequest;
+use JeffreyVanHees\OnlinePaymentPlatform\Requests\Settlements\GetSettlementsRequest;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 

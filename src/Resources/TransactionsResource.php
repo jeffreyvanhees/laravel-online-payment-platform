@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace JeffreyVanHees\OnlinePaymentPlatform\Resources;
 
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Transactions\CreateTransactionData;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Transactions\UpdateTransactionData;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Transactions\CreateTransactionRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Transactions\DeleteTransactionRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Transactions\GetTransactionRequest;
@@ -69,14 +70,14 @@ class TransactionsResource extends BaseResource
      * Update an existing transaction (e.g., escrow date)
      *
      * @param  string  $transactionUid  The unique identifier of the transaction
-     * @param  array  $data  Update data (e.g., escrow_date)
+     * @param  UpdateTransactionData|array  $data  Update data (e.g., escrow_date)
      * @return Response API response containing the updated transaction data
      *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When update data is invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When transaction is not found or other API errors
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      */
-    public function update(string $transactionUid, array $data): Response
+    public function update(string $transactionUid, UpdateTransactionData|array $data): Response
     {
         return $this->connector->send(new UpdateTransactionRequest($transactionUid, $data));
     }

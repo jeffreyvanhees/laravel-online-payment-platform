@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JeffreyVanHees\OnlinePaymentPlatform\Requests\Partners;
 
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Partners\UpdateConfigurationData;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -15,7 +16,7 @@ class UpdateConfigurationRequest extends Request implements HasBody
 
     protected Method $method = Method::POST;
 
-    public function __construct(protected array $data) {}
+    public function __construct(protected UpdateConfigurationData|array $data) {}
 
     public function resolveEndpoint(): string
     {
@@ -24,6 +25,10 @@ class UpdateConfigurationRequest extends Request implements HasBody
 
     protected function defaultBody(): array
     {
+        if ($this->data instanceof UpdateConfigurationData) {
+            return $this->data->toArray();
+        }
+
         return $this->data;
     }
 }

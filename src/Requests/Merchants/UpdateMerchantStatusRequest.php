@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants;
 
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\UpdateMerchantStatusData;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -17,7 +18,7 @@ class UpdateMerchantStatusRequest extends Request implements HasBody
 
     public function __construct(
         protected string $merchantUid,
-        protected string $status
+        protected UpdateMerchantStatusData|array|string $statusData
     ) {}
 
     public function resolveEndpoint(): string
@@ -27,8 +28,14 @@ class UpdateMerchantStatusRequest extends Request implements HasBody
 
     protected function defaultBody(): array
     {
-        return [
-            'status' => $this->status,
-        ];
+        if ($this->statusData instanceof UpdateMerchantStatusData) {
+            return $this->statusData->toArray();
+        }
+
+        if (is_string($this->statusData)) {
+            return ['status' => $this->statusData];
+        }
+
+        return $this->statusData;
     }
 }

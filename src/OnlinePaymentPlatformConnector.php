@@ -264,4 +264,14 @@ class OnlinePaymentPlatformConnector extends Connector implements HasBody, HasPa
             return null;
         }
     }
+
+    /**
+     * Check if the connector is in sandbox mode
+     *
+     * @return bool True if in sandbox mode, false if in production
+     */
+    public function isSandbox(): bool
+    {
+        return $this->sandbox;
+    }
 }

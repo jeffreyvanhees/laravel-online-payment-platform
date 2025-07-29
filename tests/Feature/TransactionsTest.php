@@ -41,7 +41,6 @@ it('can create a transaction', function () {
 
     $response = $this->connector->transactions()->create($transactionData);
 
-
     expect($response->successful())->toBeTrue();
     expect($response->json())->toHaveKey('uid');
     expect($response->json('amount'))->toBe(1000);

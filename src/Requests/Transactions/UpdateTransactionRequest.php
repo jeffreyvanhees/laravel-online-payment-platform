@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JeffreyVanHees\OnlinePaymentPlatform\Requests\Transactions;
 
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Transactions\UpdateTransactionData;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -17,7 +18,7 @@ class UpdateTransactionRequest extends Request implements HasBody
 
     public function __construct(
         protected string $transactionUid,
-        protected array $data
+        protected UpdateTransactionData|array $data
     ) {}
 
     public function resolveEndpoint(): string
@@ -27,6 +28,10 @@ class UpdateTransactionRequest extends Request implements HasBody
 
     protected function defaultBody(): array
     {
+        if ($this->data instanceof UpdateTransactionData) {
+            return $this->data->toArray();
+        }
+
         return $this->data;
     }
 }

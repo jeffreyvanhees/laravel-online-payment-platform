@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffreyvanhees/laravel-online-payment-platform.svg?style=flat-square)](https://packagist.org/packages/jeffreyvanhees/laravel-online-payment-platform)
 [![Tests](https://img.shields.io/github/actions/workflow/status/jeffreyvanhees/laravel-online-payment-platform/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/run-tests.yml)
-[![Coverage](https://img.shields.io/badge/Coverage-80.0%25-brightgreen?style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/coverage.yml)
+[![Coverage](https://img.shields.io/badge/Coverage-85.2%25-brightgreen?style=flat-square)](https://github.com/jeffreyvanhees/laravel-online-payment-platform/actions/workflows/coverage.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/jeffreyvanhees/laravel-online-payment-platform.svg?style=flat-square)](https://packagist.org/packages/jeffreyvanhees/laravel-online-payment-platform)
 
 A modern Laravel package for integrating with the [Online Payment Platform](https://onlinepaymentplatform.com) API. Built with [SaloonPHP](https://docs.saloon.dev) and [Spatie Laravel Data](https://spatie.be/docs/laravel-data) for an excellent developer experience.
@@ -279,7 +279,7 @@ $ubo = OnlinePaymentPlatform::merchants()->ubos('mer_123456789')->create([
 $profile = OnlinePaymentPlatform::merchants()->profiles('mer_123456789')->create([
     'name' => 'E-commerce Profile',
     'description' => 'Settings for online store',
-    'webhook_url' => 'https://store.example.com/webhook',
+    'notify_url' => 'https://store.example.com/webhook',
     'return_url' => 'https://store.example.com/success',
     'is_default' => false,
 ]);
@@ -303,6 +303,114 @@ $paymentMethods = OnlinePaymentPlatform::merchants()->paymentMethods('mer_123456
 
 // Get merchant profile balance
 $balance = OnlinePaymentPlatform::merchants()->profiles('mer_123456789')->balance('pro_987654321');
+```
+
+### Update Operations
+
+The SDK provides comprehensive update functionality for all merchant-related resources:
+
+```php
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants;
+
+// Update merchant address
+$addressData = new Merchants\UpdateMerchantAddressData(
+    street: 'Updated Street 456',
+    housenumber: '12B',
+    city: 'Rotterdam',
+    zipcode: '3000 AA'
+);
+$updatedAddress = OnlinePaymentPlatform::merchants()->addresses('mer_123456789')->update('addr_123456789', $addressData);
+
+// Update bank account information
+$bankAccountData = new Merchants\UpdateMerchantBankAccountData(
+    reference: 'updated-bank-ref-123',
+    return_url: 'https://store.example.com/bank-return',
+    notify_url: 'https://store.example.com/bank-notify'
+);
+$updatedBankAccount = OnlinePaymentPlatform::merchants()->bankAccounts('mer_123456789')->update('ba_123456789', $bankAccountData);
+
+// Update contact information
+$contactData = new Merchants\UpdateMerchantContactData(
+    name: 'Jane Doe Updated',
+    email: 'jane.updated@example.com',
+    phone: '+31612345679'
+);
+$updatedContact = OnlinePaymentPlatform::merchants()->contacts('mer_123456789')->update('con_123456789', $contactData);
+
+// Update merchant profile
+$profileData = new Merchants\UpdateMerchantProfileData(
+    name: 'Updated E-commerce Profile',
+    description: 'Updated settings for online store',
+    url: 'https://store.example.com',
+    notify_url: 'https://store.example.com/updated-webhook',
+    return_url: 'https://store.example.com/updated-success'
+);
+$updatedProfile = OnlinePaymentPlatform::merchants()->profiles('mer_123456789')->update('pro_123456789', $profileData);
+
+// Update UBO information
+$uboData = new Merchants\UpdateMerchantUBOData(
+    name: 'John Doe Updated',
+    name_prefix: 'Mr.',
+    date_of_birth: '1980-01-15',
+    country_of_residence: 'NLD',
+    percentage_of_shares: 30.0
+);
+$updatedUBO = OnlinePaymentPlatform::merchants()->ubos('mer_123456789')->update('ubo_123456789', $uboData);
+
+// Delete operations (where supported)
+$deleteResult = OnlinePaymentPlatform::merchants()->profiles('mer_123456789')->delete('pro_123456789');
+```
+
+### Sandbox Testing & Status Updates
+
+For testing purposes, the SDK provides sandbox-only methods to simulate status changes:
+
+```php
+// Note: These methods only work in sandbox environment and will throw 
+// SandboxOnlyException in production
+
+// Update merchant status (sandbox only)
+$statusResult = OnlinePaymentPlatform::merchants()->updateStatus('mer_123456789', 'live');
+// Available statuses: pending, live, terminated, suspended, blocked
+
+// Update bank account status (sandbox only)  
+$bankStatusResult = OnlinePaymentPlatform::merchants()->bankAccounts('mer_123456789')->updateStatus('ba_123456789', 'approved');
+// Available statuses: pending, approved, disapproved
+// Status flows: new -> pending -> approved/disapproved, approved -> disapproved -> approved
+
+// Update contact status (sandbox only)
+$contactStatusResult = OnlinePaymentPlatform::merchants()->contacts('mer_123456789')->updateStatus('con_123456789', 'verified');
+// Available statuses: pending, verified, unverified
+// Status flows: pending -> unverified/verified, unverified -> verified
+
+// Update UBO status (sandbox only)
+$uboStatusResult = OnlinePaymentPlatform::merchants()->ubos('mer_123456789')->updateStatus('ubo_123456789', 'verified');
+// Available statuses: pending, verified, unverified  
+// Status flows: pending -> unverified/verified, unverified -> verified
+```
+
+### Flexible Input Types
+
+All SDK methods accept both DTOs and arrays for maximum flexibility:
+
+```php
+// Using DTOs (recommended for type safety)
+$contactData = new Merchants\UpdateMerchantContactData(
+    name: 'John Updated',
+    email: 'john.updated@example.com'
+);
+$result = OnlinePaymentPlatform::merchants()->contacts('mer_123')->update('con_123', $contactData);
+
+// Using arrays (convenient for simple updates)
+$result = OnlinePaymentPlatform::merchants()->contacts('mer_123')->update('con_123', [
+    'name' => 'John Updated',
+    'email' => 'john.updated@example.com'
+]);
+
+// Status updates accept DTO, array, or string
+$result = OnlinePaymentPlatform::merchants()->updateStatus('mer_123', 'live'); // string
+$result = OnlinePaymentPlatform::merchants()->updateStatus('mer_123', ['status' => 'live']); // array
+$result = OnlinePaymentPlatform::merchants()->updateStatus('mer_123', new Merchants\UpdateMerchantStatusData('live')); // DTO
 ```
 
 ### Transactions
@@ -671,10 +779,10 @@ composer replay
 
 ### Test Coverage
 
-The package includes comprehensive tests covering all API endpoints with **80.0% code coverage**:
+The package includes comprehensive tests covering all API endpoints with **85.2% code coverage**:
 
-- ✅ **240 tests** covering all major endpoints and DTOs  
-- ✅ **1053 assertions** ensuring functionality  
+- ✅ **302 tests** covering all major endpoints and DTOs  
+- ✅ **1250 assertions** ensuring functionality  
 - ✅ **Merchant operations** - CRUD, contacts, addresses, bank accounts, settlements, UBOs, profiles
 - ✅ **Transaction lifecycle** - create, retrieve, update, delete
 - ✅ **Payment flows** - charges, mandates, withdrawals, disputes

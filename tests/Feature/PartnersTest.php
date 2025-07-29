@@ -22,7 +22,7 @@ it('can get partner configuration', function () {
 
 it('can update partner configuration', function () {
     $configData = [
-        'webhook_url' => 'https://updated.example.com/webhook',
+        'notify_url' => 'https://updated.example.com/webhook',
         'return_url' => 'https://updated.example.com/return',
         'settings' => [
             'auto_settlement' => true,

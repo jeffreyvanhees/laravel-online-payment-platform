@@ -29,7 +29,7 @@ it('can create a profile for a merchant', function () {
         $profileData = [
             'name' => 'Test Profile',
             'description' => 'A test merchant profile',
-            'webhook_url' => 'https://example.com/webhook/profile',
+            'notify_url' => 'https://example.com/webhook/profile',
             'return_url' => 'https://example.com/return/profile',
             'is_default' => false,
         ];
@@ -40,7 +40,7 @@ it('can create a profile for a merchant', function () {
             expect($response->json())->toHaveKey('uid');
             expect($response->json('name'))->toBe('Test Profile');
             expect($response->json('description'))->toBe('A test merchant profile');
-            expect($response->json('webhook_url'))->toBe('https://example.com/webhook/profile');
+            expect($response->json('notify_url'))->toBe('https://example.com/webhook/profile');
         } else {
             // Test structure is correct even if creation fails in sandbox
             expect(true)->toBeTrue();
@@ -70,7 +70,7 @@ it('can retrieve a profile', function () {
         $profileData = [
             'name' => 'Retrieve Test Profile',
             'description' => 'Profile for retrieval testing',
-            'webhook_url' => 'https://example.com/webhook/retrieve',
+            'notify_url' => 'https://example.com/webhook/retrieve',
             'return_url' => 'https://example.com/return/retrieve',
             'is_default' => true,
         ];

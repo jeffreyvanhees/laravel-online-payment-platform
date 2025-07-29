@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JeffreyVanHees\OnlinePaymentPlatform\Resources;
 
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Partners\UpdateConfigurationData;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Partners\GetConfigurationRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Partners\GetPartnerMerchantBalanceRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Partners\UpdateConfigurationRequest;
@@ -34,14 +35,14 @@ class PartnersResource extends BaseResource
     /**
      * Update partner configuration
      *
-     * @param  array  $data  Configuration data including notify_url and other settings
+     * @param  UpdateConfigurationData|array  $data  Configuration data including notify_url and other settings
      * @return Response API response containing the updated configuration
      *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When configuration data is invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException For other API errors
      */
-    public function updateConfiguration(array $data): Response
+    public function updateConfiguration(UpdateConfigurationData|array $data): Response
     {
         return $this->connector->send(new UpdateConfigurationRequest($data));
     }

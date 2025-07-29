@@ -13,9 +13,9 @@ class ComplianceRequirementData extends BaseData
         public int $updated,
         public string $type,
         public string $status,
-        public string $object_type,
-        public string $object_uid,
-        public string $object_url,
-        public string $object_redirect_url,
+        public ?string $object_type,
+        public ?string $object_uid,
+        public ?string $object_url,
+        public ?string $object_redirect_url,
     ) {}
 }

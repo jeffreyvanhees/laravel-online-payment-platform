@@ -29,7 +29,7 @@ class GetSettlementsRequest extends Request
     public function createDtoFromResponse(Response $response): SettlementsResponse
     {
         $responseData = $response->json();
-        
+
         return SettlementsResponse::from([
             ...$responseData,
             'data' => array_map(

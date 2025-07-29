@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace JeffreyVanHees\OnlinePaymentPlatform\Resources\Merchants;
 
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateMerchantAddressData;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\UpdateMerchantAddressData;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\AddMerchantAddressRequest;
+use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\UpdateMerchantAddressRequest;
 use Saloon\Http\BaseResource;
 use Saloon\Http\Response;
 
@@ -25,15 +28,31 @@ class AddressesResource extends BaseResource
     /**
      * Add an address to the merchant
      *
-     * @param  array  $data  Address data including street, city, postal_code, country, etc.
+     * @param  CreateMerchantAddressData|array  $data  Address data including street, city, postal_code, country, etc.
      * @return Response API response containing the created address data
      *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When required address fields are missing
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When merchant is not found or other API errors
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      */
-    public function add(array $data): Response
+    public function add(CreateMerchantAddressData|array $data): Response
     {
         return $this->connector->send(new AddMerchantAddressRequest($this->merchantUid, $data));
+    }
+
+    /**
+     * Update an existing address
+     *
+     * @param  string  $addressUid  The unique identifier of the address
+     * @param  UpdateMerchantAddressData|array  $data  Address update data
+     * @return Response API response containing the updated address data
+     *
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When update data is invalid
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When address is not found or other API errors
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
+     */
+    public function update(string $addressUid, UpdateMerchantAddressData|array $data): Response
+    {
+        return $this->connector->send(new UpdateMerchantAddressRequest($this->merchantUid, $addressUid, $data));
     }
 }

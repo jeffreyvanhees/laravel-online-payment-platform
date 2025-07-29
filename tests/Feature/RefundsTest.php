@@ -93,7 +93,7 @@ it('can list refunds for a transaction', function () {
                     'metadata' => [],
                     'livemode' => false,
                     'object' => 'refund',
-                ]
+                ],
             ],
             'has_more' => false,
             'total_item_count' => 2,
@@ -141,7 +141,7 @@ it('can create refund with array data for backward compatibility', function () {
 
     $response = $this->connector->transactions()->refunds($this->transactionUid)->create([
         'amount' => 2500,
-        'payout_description' => 'Order cancellation', 
+        'payout_description' => 'Order cancellation',
         'internal_reason' => 'cancellation',
     ]);
 
@@ -170,7 +170,7 @@ it('handles refund creation errors properly', function () {
     );
 
     $response = $this->connector->transactions()->refunds($this->transactionUid)->create($refundData);
-    
+
     expect($response->status())->toBe(400);
     expect($response->json('error.message'))->toBe('Refund amount exceeds transaction amount');
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants;
 
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\MigrateMerchantData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Merchants\MerchantData;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
@@ -19,7 +20,7 @@ class MigrateMerchantRequest extends Request implements HasBody
 
     public function __construct(
         protected string $merchantUid,
-        protected array $migrationData
+        protected MigrateMerchantData|array $migrationData
     ) {}
 
     public function resolveEndpoint(): string
@@ -29,6 +30,10 @@ class MigrateMerchantRequest extends Request implements HasBody
 
     protected function defaultBody(): array
     {
+        if ($this->migrationData instanceof MigrateMerchantData) {
+            return $this->migrationData->toArray();
+        }
+
         return $this->migrationData;
     }
 

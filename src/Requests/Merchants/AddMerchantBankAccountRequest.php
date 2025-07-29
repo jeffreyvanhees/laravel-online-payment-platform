@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants;
 
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateMerchantBankAccountData;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
@@ -17,7 +18,7 @@ class AddMerchantBankAccountRequest extends Request implements HasBody
 
     public function __construct(
         protected string $merchantUid,
-        protected array $data
+        protected CreateMerchantBankAccountData|array $data
     ) {}
 
     public function resolveEndpoint(): string
@@ -27,6 +28,10 @@ class AddMerchantBankAccountRequest extends Request implements HasBody
 
     protected function defaultBody(): array
     {
+        if ($this->data instanceof CreateMerchantBankAccountData) {
+            return $this->data->toArray();
+        }
+
         return $this->data;
     }
 }

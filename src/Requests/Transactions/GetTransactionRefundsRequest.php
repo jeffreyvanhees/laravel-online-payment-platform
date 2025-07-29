@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace JeffreyVanHees\OnlinePaymentPlatform\Requests\Transactions;
 
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Transactions\RefundsResponse;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Transactions\RefundData;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Responses\Transactions\RefundsResponse;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
 use Saloon\Http\Response;
@@ -32,9 +32,9 @@ class GetTransactionRefundsRequest extends Request
     public function createDtoFromResponse(Response $response): RefundsResponse
     {
         $responseData = $response->json();
-        
-        $refunds = collect($responseData['data'] ?? [])->map(fn($refund) => RefundData::from($refund));
-        
+
+        $refunds = collect($responseData['data'] ?? [])->map(fn ($refund) => RefundData::from($refund));
+
         return RefundsResponse::from([
             ...$responseData,
             'data' => $refunds->toArray(),

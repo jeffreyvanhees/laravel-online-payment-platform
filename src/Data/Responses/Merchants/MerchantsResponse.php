@@ -12,12 +12,12 @@ class MerchantsResponse extends PaginatedListResponse
 {
     public function __construct(
         public string $object,
-        public ?string $url = null,
-        public bool $has_more = false,
-        public int $total_item_count = 0,
-        public int $items_per_page = 10,
-        public int $current_page = 1,
-        public int $last_page = 1,
+        public ?string $url,
+        public bool $has_more,
+        public int $total_item_count,
+        public int $items_per_page,
+        public int $current_page,
+        public int $last_page,
         #[DataCollectionOf(MerchantData::class)]
         public DataCollection $data,
     ) {

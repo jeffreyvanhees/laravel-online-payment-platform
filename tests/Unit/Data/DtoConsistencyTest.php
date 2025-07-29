@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use JeffreyVanHees\OnlinePaymentPlatform\Data\Common\ProductData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Files\CreateFileData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Mandates\CreateMandateData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Transactions\CreateRefundData;
@@ -24,7 +23,7 @@ it('can create CreateRefundData with all fields', function () {
     expect($refundData->payout_description)->toBe('Product defect refund');
     expect($refundData->internal_reason)->toBe('defective_product');
     expect($refundData->metadata)->toBe(['reason' => 'manufacturing_defect']);
-    
+
     $array = $refundData->toArray();
     expect($array)->toHaveKey('amount', 1000);
     expect($array)->toHaveKey('payout_description', 'Product defect refund');
@@ -74,14 +73,14 @@ it('can create CreateMandateData with product collection', function () {
                 'quantity' => 1,
                 'price' => 2500,
                 'description' => 'Monthly subscription',
-                'vat_rate' => '21'
+                'vat_rate' => '21',
             ],
             [
                 'name' => 'Setup Fee',
                 'quantity' => 1,
                 'price' => 500,
-                'description' => 'One-time setup fee'
-            ]
+                'description' => 'One-time setup fee',
+            ],
         ],
         total_price: 3000,
         return_url: 'https://example.com/return',
@@ -118,7 +117,7 @@ it('can create MandateData from API response', function () {
         'iban' => 'NL91ABNA0417164300',
         'bic' => 'ABNANL2A',
         'holder_name' => 'John Doe',
-        'mandate_method' => 'payment', 
+        'mandate_method' => 'payment',
         'mandate_type' => 'consumer',
         'mandate_repeat' => 'subscription',
         'amount' => 100,
@@ -216,7 +215,7 @@ it('filters null values from DTO arrays', function () {
     );
 
     $array = $refundData->toArray();
-    
+
     expect($array)->toHaveKey('amount', 1000);
     expect($array)->toHaveKey('payout_description', 'Test refund');
     expect($array)->not->toHaveKey('internal_reason');

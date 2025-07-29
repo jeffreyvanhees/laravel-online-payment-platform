@@ -6,6 +6,9 @@ namespace JeffreyVanHees\OnlinePaymentPlatform\Resources;
 
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateBusinessMerchantData;
 use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\CreateConsumerMerchantData;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\UpdateMerchantData;
+use JeffreyVanHees\OnlinePaymentPlatform\Data\Requests\Merchants\UpdateMerchantStatusData;
+use JeffreyVanHees\OnlinePaymentPlatform\Exceptions\SandboxOnlyException;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\CreateMerchantRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\GetMerchantRequest;
 use JeffreyVanHees\OnlinePaymentPlatform\Requests\Merchants\GetMerchantsRequest;
@@ -166,14 +169,14 @@ class MerchantsResource extends BaseResource
      * Update merchant information
      *
      * @param  string  $merchantUid  The unique identifier of the merchant
-     * @param  array  $updateData  Update data (e.g., emailaddress, notify_url, return_url)
+     * @param  UpdateMerchantData|array  $updateData  Update data (e.g., emailaddress, notify_url, return_url)
      * @return Response API response containing the updated merchant data
      *
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When update data is invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When merchant is not found or other API errors
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      */
-    public function update(string $merchantUid, array $updateData): Response
+    public function update(string $merchantUid, UpdateMerchantData|array $updateData): Response
     {
         return $this->connector->send(new UpdateMerchantRequest($merchantUid, $updateData));
     }
@@ -201,15 +204,20 @@ class MerchantsResource extends BaseResource
      * for testing purposes. Supported statuses: pending, live, terminated, suspended, blocked
      *
      * @param  string  $merchantUid  The unique identifier of the merchant
-     * @param  string  $status  The new status to set
+     * @param  UpdateMerchantStatusData|array|string  $status  The new status to set
      * @return Response API response confirming the status update
      *
+     * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\SandboxOnlyException When not in sandbox environment
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ValidationException When status is invalid
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\ApiException When merchant is not found or other API errors
      * @throws \JeffreyVanHees\OnlinePaymentPlatform\Exceptions\AuthenticationException When API key is invalid
      */
-    public function updateStatus(string $merchantUid, string $status): Response
+    public function updateStatus(string $merchantUid, UpdateMerchantStatusData|array|string $status): Response
     {
+        if (!$this->connector->isSandbox()) {
+            throw new SandboxOnlyException('updateStatus method for merchants');
+        }
+
         return $this->connector->send(new UpdateMerchantStatusRequest($merchantUid, $status));
     }
 }
